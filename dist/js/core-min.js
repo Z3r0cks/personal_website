@@ -1,0 +1,1 @@
+function testFunction(){console.log("Hello World")}testFunction();const test="deine mami",test2="deine mami";console.log("Hi"),console.log("DU");
