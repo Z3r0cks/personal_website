@@ -1,0 +1,12 @@
+$testvalue: #123226;
+$testvalue2: green;
+
+body {
+   background-color: $testvalue;
+   color: $testvalue2;
+}
+
+.test {
+   background-color: $testvalue;
+   color: $testvalue2;
+}
