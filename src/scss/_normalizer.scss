@@ -1,12 +1,16 @@
-$testvalue: #123226;
-$testvalue2: green;
-
-body {
-   background-color: $testvalue;
-   color: $testvalue2;
+body{
+   margin: 0;
+   background-color: $c1-main;
 }
 
-.test {
-   background-color: $testvalue;
-   color: $testvalue2;
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+   margin: 0;
+   color: $c-white;
 }

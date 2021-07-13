@@ -11,7 +11,7 @@ const bundleSass = () => {
    return src('./src/scss/**/*.scss')
       .pipe(sourceMaps.init())
       .pipe(compileSass().on('error', compileSass.logError))
-      .pipe(minifyCSS())
+      .pipe(minifyCSS({rebase: false}))
       .pipe(sourceMaps.write())
       .pipe(dest('./dist/css/'));
 }

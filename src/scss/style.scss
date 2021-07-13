@@ -1,1 +1,22 @@
+// Variables
+@import "variables";
+
+
+// Utility
+@import "./mixins";
+@import "./colors";
+@import "./fonts";
+@import "./spaces";
+@import "./utilitys";
+
+// normalizer
 @import "./normalizer";
+
+
+// components
+@import "./navbar";
+@import "./main";
+@import "./button";
+
+// dev
+@import "./devSizeBtn"
