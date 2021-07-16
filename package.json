@@ -4,21 +4,27 @@
   "description": "Personal website with informations about the person, bBackend to swtich informations and a secured area for business partner.",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon dist/js/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jacroch, Alexander; Kaserer, Patrick",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^16.3.2",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-minify": "^3.1.0",
+    "gulp-nodemon": "^2.5.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "node-sass": "^6.0.1",
+    "nodemon": "^2.0.12",
     "sass": "^1.35.2",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "gulp-typescript": "^6.0.0-alpha.1"
+    "express": "^4.17.1",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "mysql": "^2.18.1"
   }
 }
