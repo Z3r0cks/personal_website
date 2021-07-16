@@ -1,5 +1,7 @@
-function testFunction() {
-   console.log("Hello World");
-}
+namespace personal_website {
+   function testFunction() {
+      console.log("Hello Wosrld");
+   }
 
-testFunction();
+   testFunction();
+}

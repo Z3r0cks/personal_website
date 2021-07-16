@@ -1,0 +1,1 @@
+var personal_website;!function(e){console.log("Hello Wosrld")}(personal_website||(personal_website={})),personal_website||(personal_website={}),console.log(server_1.default),server_1.default();

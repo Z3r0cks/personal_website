@@ -22,20 +22,35 @@ const minify = () => {
       .pipe(dest('./dist/js/'))
 }
 
-const tsc = (path, outDir, outFile) => {
-   return src(path)
+const tsc = () => {
+   return src('src/ts/*.ts')
       .pipe(sourceMaps.init())
       .pipe(ts({
          target: "ESNEXT",
          module: "system",
          noImplicitAny: true,
-         outFile: outFile,
-         outDir: outDir,
-         moduleResolution: "node"
+         outFile: 'app.js',
+         outDir: './dist/js/',
+         moduleResolution: 'node',
       }))
       .pipe(sourceMaps.write())
-      .pipe(minifyJS())
-      .pipe(dest(outDir))
+      .pipe(minifyJS({ noSource: true }))
+      .pipe(dest('./dist/js/'))
+}
+
+const serverTsc = () => {
+   return src('src/server/*.ts')
+      .pipe(sourceMaps.init())
+      .pipe(ts({
+         target: "commonjs",
+         module: "system",
+         noImplicitAny: true,
+         outFile: 'server.js',
+         moduleResolution: 'node'
+      }))
+      .pipe(sourceMaps.write())
+      .pipe(minifyJS({ noSource: false }))
+      .pipe(dest('./dist/server/'))
 }
 
 // const serverJS = () => {
@@ -47,13 +62,14 @@ const tsc = (path, outDir, outFile) => {
 
 const devWatch = () => {
    watch('./src/scss/**/*.scss', bundleSass);
-   watch('src/ts/*.ts', () => {
-      tsc('src/ts/*.ts', './dist/js/', 'core.js')
-   });;
-   watch('src/server/*.ts', () => {
-      tsc('src/server/*.ts', './dist/server/', 'server.js')
-   });;
-}
+   watch('./src/ts/*.ts', tsc);
+   watch('./src/server/*.ts', serverTsc);
+};
+// watch('src/server/*.ts', () => {
+//    tsc('src/server/*.ts', './dist/server/', 'server.js')
+//    console.log("test");
+// });;
+
 
 exports.bundleSass = bundleSass;
 exports.devWatch = devWatch;

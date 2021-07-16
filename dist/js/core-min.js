@@ -1,1 +1,0 @@
-function testFunction(){console.log("Hello World")}testFunction();const test=require("../server/server.ts");console.log(test);
