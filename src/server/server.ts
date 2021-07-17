@@ -1,21 +1,12 @@
 import express from "express";
 import { Request, Response } from "express";
-
 import mysql from "mysql";
 
 const databaseName = "personal_website";
 const tableName = "content";
 
-
-
 const app = express();
-// const Port = process.env.Port || 3000
-
-
-// // const server = app.listen(Port, () => {
-// //    console.log(`server ist starting on port ${Port}`);
-// // });
-
+app.use(express.static('dist'))
 
 const connection = mysql.createConnection({
    // connectionLimit: 10,
@@ -24,6 +15,18 @@ const connection = mysql.createConnection({
    password: '',
    database: databaseName
 })
+
+const Port = process.env.Port || 3000
+
+
+app.get("index.html", (req, res) => {
+   res.send("No static resource found")
+});
+
+const server = app.listen(Port, () => {
+   console.log(`server ist starting on port ${Port}`);
+});
+
 
 // GET method route
 // app.get('/', function (req, res) {
@@ -41,7 +44,6 @@ app.post('/titlename', (req: Request, res: Response) => {
 
 function selectAll(res: any) {
    connection.connect();
-
    connection.query(`SELECT * FROM ${tableName}`, (err: any, rows: any, field: any) => {
       if (err) throw err;
       console.log(rows);

@@ -34,7 +34,8 @@ const tsc = () => {
          moduleResolution: 'node',
       }))
       .pipe(sourceMaps.write())
-      .pipe(minifyJS({ noSource: true }))
+      // TODO: set noSource to true
+      .pipe(minifyJS({ noSource: false }))
       .pipe(dest('./dist/js/'))
 }
 
@@ -42,13 +43,15 @@ const serverTsc = () => {
    return src('src/server/*.ts')
       .pipe(sourceMaps.init())
       .pipe(ts({
-         target: "commonjs",
-         module: "system",
+         module: 'commonjs',
+         target: 'es6',
+         lib: ['es6'],
          noImplicitAny: true,
-         outFile: 'server.js',
-         moduleResolution: 'node'
+         moduleResolution: 'node',
+         esModuleInterop: true
       }))
       .pipe(sourceMaps.write())
+      // TODO: set noSource to true
       .pipe(minifyJS({ noSource: false }))
       .pipe(dest('./dist/server/'))
 }

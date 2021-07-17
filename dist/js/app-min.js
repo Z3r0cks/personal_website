@@ -1,1 +1,1 @@
-var personal_website;!function(e){console.log("Hello Wosrld")}(personal_website||(personal_website={})),personal_website||(personal_website={}),console.log(server_1.default),server_1.default();
+(async()=>{document.getElementById("postBtn").addEventListener("click",async function(){const t=await fetch("/title",{method:"POST",body:JSON.stringify({id:1,name:"title_name",Text_Content:"Alexander Jaroch"})}),e=await t.json();console.log(e)})})();
