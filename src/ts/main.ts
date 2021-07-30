@@ -1,3 +1,1 @@
-namespace personal_website {
-
-}
+/// <reference path="test.ts" />

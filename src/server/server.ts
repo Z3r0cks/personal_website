@@ -1,12 +1,18 @@
 import express from "express";
 import { Request, Response } from "express";
+import { fstat } from "fs";
 import mysql from "mysql";
+import fs from 'fs';
+import { assambleHTML } from "./Page";
 
 const databaseName = "personal_website";
 const tableName = "content";
+const Port = process.env.Port || 3000;
+const host = "127.0.0.1";
+const myBody = new assambleHTML();
 
 const app = express();
-app.use(express.static('dist'))
+app.use('/style.css', express.static('./dist/css'));
 
 const connection = mysql.createConnection({
    // connectionLimit: 10,
@@ -15,40 +21,33 @@ const connection = mysql.createConnection({
    password: '',
    database: databaseName
 })
-
-const Port = process.env.Port || 3000
-
-
-app.get("index.html", (req, res) => {
-   res.send("No static resource found")
-});
-
 const server = app.listen(Port, () => {
    console.log(`server ist starting on port ${Port}`);
 });
 
-
-// GET method route
-// app.get('/', function (req, res) {
-//    res.send('GET request to the homepage');
-// });
-
-app.post('/titlename', (req: Request, res: Response) => {
-   try {
-      selectAll(req.body);
-      res.send('Joar')
-   } catch (error) {
-      res.send('Nö')
-   }
+app.get("/", (req, res) => {
+   res.sendFile(`${__dirname}/index.html`)
 });
 
-function selectAll(res: any) {
-   connection.connect();
-   connection.query(`SELECT * FROM ${tableName}`, (err: any, rows: any, field: any) => {
-      if (err) throw err;
-      console.log(rows);
-      console.log(`TABLES: ${rows}`);
-   })
-   connection.end();
-}
+app.get("/js/app.js", (req, res) => {
+   res.sendFile(`${__dirname}/js/app.js`)
+});
 
+app.get("/css/style.css", (req, res) => {
+   res.sendFile(`${__dirname}/css/style.css`)
+});
+
+app.get(/assets\/fonts\/.*/i, (req, res) => {
+   if (fs.existsSync(__dirname + req.path)) {
+      res.sendFile(__dirname + req.path);
+   } else res.sendStatus(404);
+});
+
+app.get("/favicon.ico", (req, res) => {
+   res.sendFile(`${__dirname}/assets/favicon.ico`);
+});
+
+app.get("/test", (req, res) => {
+   const test = new assambleHTML();
+   res.send(test.getHtmlString());
+});

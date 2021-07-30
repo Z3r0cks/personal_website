@@ -2,11 +2,11 @@
   "name": "personal_website",
   "version": "1.0.0",
   "description": "Personal website with informations about the person, bBackend to swtich informations and a secured area for business partner.",
-  "main": "index.js",
+  "main": "server.js",
 
 
   "scripts": {
-    "start": "nodemon dist/server/server.js",
+    "start": "nodemon dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jacroch, Alexander; Kaserer, Patrick",

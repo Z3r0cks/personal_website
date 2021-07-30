@@ -32,10 +32,11 @@ const tsc = () => {
          outFile: 'app.js',
          outDir: './dist/js/',
          moduleResolution: 'node',
+         lib: ['es6'],
       }))
       .pipe(sourceMaps.write())
       // TODO: set noSource to true
-      .pipe(minifyJS({ noSource: false }))
+      // .pipe(minifyJS({ noSource: false }))
       .pipe(dest('./dist/js/'))
 }
 
@@ -45,7 +46,7 @@ const serverTsc = () => {
       .pipe(ts({
          module: 'commonjs',
          target: 'es6',
-         lib: ['es6'],
+         lib: ['es6', 'dom'],
          noImplicitAny: true,
          moduleResolution: 'node',
          esModuleInterop: true
@@ -53,7 +54,7 @@ const serverTsc = () => {
       .pipe(sourceMaps.write())
       // TODO: set noSource to true
       .pipe(minifyJS({ noSource: false }))
-      .pipe(dest('./dist/server/'))
+      .pipe(dest('./dist/'))
 }
 
 // const serverJS = () => {
@@ -64,6 +65,9 @@ const serverTsc = () => {
 // }
 
 const devWatch = () => {
+   bundleSass();
+   tsc();
+   serverTsc();
    watch('./src/scss/**/*.scss', bundleSass);
    watch('./src/ts/*.ts', tsc);
    watch('./src/server/*.ts', serverTsc);
