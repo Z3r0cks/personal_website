@@ -9,7 +9,6 @@ const databaseName = "personal_website";
 const tableName = "content";
 const Port = process.env.Port || 3000;
 const host = "127.0.0.1";
-const myBody = new assambleHTML();
 
 const app = express();
 app.use('/style.css', express.static('./dist/css'));
@@ -48,6 +47,5 @@ app.get("/favicon.ico", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-   const test = new assambleHTML();
-   res.send(test.getHtmlString());
+   res.send(new assambleHTML().getHtmlString());
 });

@@ -1,26 +1,23 @@
-// import { HtmlDivElement } from "./HtmlElement"
-import { HtmlElement } from "./HtmlElement"
+import { HtmlButtonElement, HtmlDivElement, HtmlH3Element, HtmlHeaderElement, HtmlNavElement } from "./HtmlElement"
 import { createHTML } from "./createHtml"
 
-
 const html = new createHTML("de", "./css/style.css", "Mein Title", ["./js/app.js"]);
-const header = new HtmlElement("header", false, false, false, [
-   new HtmlElement("nav", "navbar", false, false, [
-      new HtmlElement("h3", "navTitle", false, "Patrick Kaserer", false),
-      new HtmlElement("div", false, false, false, [
-         new HtmlElement("button", "btn btn--second", false, "über mich", false),
-         new HtmlElement("button", "btn btn--second", false, "Referenzen", false),
-         new HtmlElement("button", "btn btn--main", false, "Kontakt", false)
+const header = new HtmlHeaderElement(false, false, false, [
+   new HtmlNavElement("navbar", false, false, [
+      new HtmlH3Element("navTitle", false, "Patrick Kaserer", false),
+      new HtmlDivElement(false, false, false, [
+         new HtmlButtonElement("btn btn--second", false, "über mich", false),
+         new HtmlButtonElement("btn btn--second", false, "Referenzen", false),
+         new HtmlButtonElement("btn btn--main", false, "Kontakt", false),
       ])
    ])
-]);
-
+])
 
 export class assambleHTML {
    getHtmlString() {
+      console.log(html.newHTML([header]));
       return html.newHTML([
          header,
-         new HtmlElement("div", "devBtn", false, false, false)
       ]);
    }
 }
