@@ -31,8 +31,8 @@ const tsc = () => {
          noImplicitAny: true,
          outFile: 'app.js',
          outDir: './dist/js/',
-         moduleResolution: 'node',
-         lib: ['es6'],
+         lib: ['es6', 'dom'],
+         esModuleInterop: true
       }))
       .pipe(sourceMaps.write())
       // TODO: set noSource to true

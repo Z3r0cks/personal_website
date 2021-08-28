@@ -1,23 +1,39 @@
-import { HtmlButtonElement, HtmlDivElement, HtmlH3Element, HtmlHeaderElement, HtmlNavElement } from "./HtmlElement"
-import { createHTML } from "./createHtml"
+import mysql, { Connection, MysqlError } from "mysql";
+import fs from 'fs';
+import { DatabaseConfig } from "./interfaces/databaseConfig";
+import { Html } from "./createHtml";
+import { HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement } from "./HtmlElement";
 
-const html = new createHTML("de", "./css/style.css", "Mein Title", ["./js/app.js"]);
-const header = new HtmlHeaderElement(false, false, false, [
-   new HtmlNavElement("navbar", false, false, [
-      new HtmlH3Element("navTitle", false, "Patrick Kaserer", false),
-      new HtmlDivElement(false, false, false, [
-         new HtmlButtonElement("btn btn--second", false, "über mich", false),
-         new HtmlButtonElement("btn btn--second", false, "Referenzen", false),
-         new HtmlButtonElement("btn btn--main", false, "Kontakt", false),
-      ])
-   ])
-])
+export abstract class Page {
+   protected connection: Connection;
+   protected html: Html;
+   protected body: HtmlBodyElement;
+   protected header: HtmlHeaderElement;
+   protected footer: HtmlfooterElement;
 
-export class assambleHTML {
-   getHtmlString() {
-      console.log(html.newHTML([header]));
-      return html.newHTML([
-         header,
-      ]);
+   constructor() {
+      const dataBase: DatabaseConfig = JSON.parse(fs.readFileSync("databaseConfig.json").toString());
+      this.connection = mysql.createConnection({
+         host: dataBase.host,
+         user: dataBase.user,
+         password: dataBase.password,
+         database: dataBase.name,
+         port: dataBase.port
+      })
    }
+
+   protected query<T>(query: string): Promise<T | MysqlError> {
+      return new Promise((resolve, reject) => {
+         this.connection.connect();
+         this.connection.query(query, (error: MysqlError, response: T) => {
+            if (error) {
+               reject(error);
+            }
+            else
+               resolve(response);
+         })
+      })
+   }
+   abstract buildPage(): void;
+   abstract getHtmlString(): string;
 }

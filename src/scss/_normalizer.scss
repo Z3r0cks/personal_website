@@ -1,6 +1,17 @@
-body{
+body {
    margin: 0;
    background-color: $c1-main;
+   padding: 0 5rem;
+}
+
+.c_titleText {
+   & h3 {
+      margin-bottom: 1rem;
+   }
+   & h4 {
+      margin-top: 1rem;
+      margin-bottom: 0.7rem;
+   }
 }
 
 p,

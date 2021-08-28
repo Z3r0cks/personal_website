@@ -1,6 +1,6 @@
 import { HtmlElement } from "./HtmlElement";
 
-export class createHTML {
+export class Html {
    protected _language: string;
    protected _styleHref: string;
    protected _title: string;

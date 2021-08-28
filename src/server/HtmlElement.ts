@@ -38,6 +38,15 @@ export abstract class HtmlElement {
    }
 }
 
+//////////////////////////////// DIV
+
+export class HtmlBodyElement extends HtmlElement {
+   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
+      super(htmlClasses, id, innerText, childElement);
+      this._tagName = "body";
+      this._isCloseTag = true;
+   }
+}
 
 //////////////////////////////// DIV
 
@@ -114,7 +123,7 @@ export class HtmlNavElement extends HtmlElement {
    }
 }
 
-//////////////////////////////// NAV
+//////////////////////////////// BUTTON
 
 export class HtmlButtonElement extends HtmlElement {
    constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
@@ -145,7 +154,7 @@ export class HtmlMainElement extends HtmlElement {
    }
 }
 
-//////////////////////////////// footer
+//////////////////////////////// FOOTER
 
 export class HtmlfooterElement extends HtmlElement {
    constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
