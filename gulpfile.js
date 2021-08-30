@@ -11,7 +11,7 @@ const bundleSass = () => {
    return src('./src/scss/**/*.scss')
       .pipe(sourceMaps.init())
       .pipe(compileSass().on('error', compileSass.logError))
-      .pipe(minifyCSS({ rebase: false }))
+      // .pipe(minifyCSS({ rebase: false }))
       .pipe(sourceMaps.write())
       .pipe(dest('./dist/css/'));
 }
@@ -23,15 +23,16 @@ const minify = () => {
 }
 
 const tsc = () => {
-   return src('src/ts/*.ts')
+   return src(
+      'src/ts/**/*.ts',
+   )
       .pipe(sourceMaps.init())
       .pipe(ts({
-         target: "ESNEXT",
+         target: "es6",
          module: "system",
-         noImplicitAny: true,
+         noImplicitAny: false,
          outFile: 'app.js',
          outDir: './dist/js/',
-         lib: ['es6', 'dom'],
          esModuleInterop: true
       }))
       .pipe(sourceMaps.write())
@@ -47,14 +48,14 @@ const serverTsc = () => {
          module: 'commonjs',
          target: 'es6',
          lib: ['es6', 'dom'],
-         noImplicitAny: true,
+         noImplicitAny: false,
          moduleResolution: 'node',
          esModuleInterop: true
       }))
       .pipe(sourceMaps.write())
       // TODO: set noSource to true
-      .pipe(minifyJS({ noSource: false }))
-      .pipe(dest('./dist/'))
+      // .pipe(minifyJS({ noSource: false }))
+      .pipe(dest('./dist/server/'))
 }
 
 // const serverJS = () => {
@@ -69,7 +70,7 @@ const devWatch = () => {
    tsc();
    serverTsc();
    watch('./src/scss/**/*.scss', bundleSass);
-   watch('./src/ts/*.ts', tsc);
+   watch('./src/ts/**/*.ts', tsc);
    watch('./src/server/*.ts', serverTsc);
 };
 // watch('src/server/*.ts', () => {

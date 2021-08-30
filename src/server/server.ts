@@ -7,6 +7,10 @@ import { TablePersonalWebsite } from "./interfaces/TablePersonalWebsite";
 import { Page } from "./Page";
 
 const Port = process.env.Port || 3000;
+const __dirParentsName = __dirname.slice(0, 33);
+
+//__dirname:         D:\Projekte\personal_website\dist\server
+//__dirParentsName:  D:\Projekte\personal_website\dist
 
 const app = express();
 app.use('/style.css', express.static('./dist/css'));
@@ -17,29 +21,29 @@ const server = app.listen(Port, () => {
 });
 
 app.get("/", (req, res) => {
-   res.sendFile(`${__dirname}/index.html`)
+   res.sendFile(`${__dirParentsName}/index.html`)
 });
 
 app.get("/backend", (req, res) => {
-   res.sendFile(`${__dirname}/backend.html`)
+   res.sendFile(`${__dirParentsName}/backend.html`)
 });
 
 app.get("/js/app.js", (req, res) => {
-   res.sendFile(`${__dirname}/js/app.js`)
+   res.sendFile(`${__dirParentsName}/js/app.js`)
 });
 
 app.get("/css/style.css", (req, res) => {
-   res.sendFile(`${__dirname}/css/style.css`)
+   res.sendFile(`${__dirParentsName}/css/style.css`)
 });
 
 app.get(/assets\/fonts\/.*/i, (req, res) => {
-   if (fs.existsSync(__dirname + req.path)) {
-      res.sendFile(__dirname + req.path);
+   if (fs.existsSync(__dirParentsName + req.path)) {
+      res.sendFile(__dirParentsName + req.path);
    } else res.sendStatus(404);
 });
 
 app.get("/favicon.ico", (req, res) => {
-   res.sendFile(`${__dirname}/assets/favicon.ico`);
+   res.sendFile(`${__dirParentsName}/assets/favicon.ico`);
 });
 
 app.get("/test", async (req, res) => {
