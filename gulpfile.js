@@ -4,7 +4,6 @@ const minifyCSS = require('gulp-clean-css');
 const minifyJS = require('gulp-minify');
 const sourceMaps = require('gulp-sourcemaps');
 const ts = require('gulp-typescript');
-
 compileSass.compiler = require('node-sass');
 
 const bundleSass = () => {
@@ -22,24 +21,24 @@ const minify = () => {
       .pipe(dest('./dist/js/'))
 }
 
-const tsc = () => {
-   return src(
-      'src/ts/**/*.ts',
-   )
-      .pipe(sourceMaps.init())
-      .pipe(ts({
-         target: "es6",
-         module: "system",
-         noImplicitAny: false,
-         outFile: 'app.js',
-         outDir: './dist/js/',
-         esModuleInterop: true
-      }))
-      .pipe(sourceMaps.write())
-      // TODO: set noSource to true
-      // .pipe(minifyJS({ noSource: false }))
-      .pipe(dest('./dist/js/'))
-}
+// const tsc = () => {
+//    return src(
+//       'src/ts/**/*.ts',
+//    )
+//       .pipe(sourceMaps.init())
+//       .pipe(ts({
+//          target: "es6",
+//          module: "system",
+//          noImplicitAny: false,
+//          outFile: 'app.js',
+//          outDir: './dist/js/',
+//          esModuleInterop: true
+//       }))
+//       .pipe(sourceMaps.write())
+//       // TODO: set noSource to true
+//       // .pipe(minifyJS({ noSource: false }))
+//       .pipe(dest('./dist/js/'))
+// }
 
 const serverTsc = () => {
    return src('src/server/*.ts')
@@ -67,10 +66,10 @@ const serverTsc = () => {
 
 const devWatch = () => {
    bundleSass();
-   tsc();
+   // tsc();
    serverTsc();
    watch('./src/scss/**/*.scss', bundleSass);
-   watch('./src/ts/**/*.ts', tsc);
+   // watch('./src/ts/**/*.ts', tsc);
    watch('./src/server/*.ts', serverTsc);
 };
 // watch('src/server/*.ts', () => {
@@ -82,4 +81,4 @@ const devWatch = () => {
 exports.bundleSass = bundleSass;
 exports.devWatch = devWatch;
 exports.minify = minify;
-exports.tsc = tsc;
+// exports.tsc = tsc;

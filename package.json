@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Personal website with informations about the person, bBackend to swtich informations and a secured area for business partner.",
   "main": "server.js",
-
-
   "scripts": {
+    "serve": "webpack serve",
+    "build:watch": "webpack --watch",
+    "build": "webpack",
     "start": "nodemon dist/server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,14 +18,21 @@
     "@types/node": "^16.3.2",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
+    "gulp-livereload": "^4.0.2",
     "gulp-minify": "^3.1.0",
     "gulp-nodemon": "^2.5.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
+    "gulp-webpack-typescript-pipeline": "^17.0.1",
+    "html-webpack-plugin": "^5.3.2",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.12",
     "sass": "^1.35.2",
-    "typescript": "^4.3.5"
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.3.5",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.1.0"
   },
   "dependencies": {
     "express": "^4.17.1",

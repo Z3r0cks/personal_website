@@ -28,8 +28,12 @@ app.get("/backend", (req, res) => {
    res.sendFile(`${__dirParentsName}/backend.html`)
 });
 
-app.get("/js/app.js", (req, res) => {
-   res.sendFile(`${__dirParentsName}/js/app.js`)
+app.get("/js/main.js", (req, res) => {
+   res.sendFile(`${__dirParentsName}/js/main.js`)
+});
+
+app.get("/js/backendPage.js", (req, res) => {
+   res.sendFile(`${__dirParentsName}/js/backendPage.js`)
 });
 
 app.get("/css/style.css", (req, res) => {
