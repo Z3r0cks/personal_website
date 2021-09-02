@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
    entry: {
@@ -7,19 +7,7 @@ module.exports = {
       main: './src/ts/frontend/app.ts'
    },
    mode: 'development',
-   watch: true,
    devtool: false,
-   devServer: {
-      static: path.join(__dirname, '/dist'), // serve your static files from here
-      proxy: [ // allows redirect of requests to webpack-dev-server to another destination
-         {
-            context: ['/api', '/auth'],  // can have multiple
-            target: 'http://localhost:8080', // server and port to redirect to
-            secure: false,
-         },
-      ],
-      port: 3030, // port webpack-dev-server listens to, defaults to 8080
-   },
    module: {
       rules: [
          {

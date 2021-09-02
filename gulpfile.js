@@ -4,7 +4,21 @@ const minifyCSS = require('gulp-clean-css');
 const minifyJS = require('gulp-minify');
 const sourceMaps = require('gulp-sourcemaps');
 const ts = require('gulp-typescript');
+const nodemon = require('gulp-nodemon');
+const browserSync = require('browser-sync');
+const webpack = require('webpack-stream');
 compileSass.compiler = require('node-sass');
+const path = require('path');
+
+const nodemonStart = done => {
+   return nodemon({ script: "dist/server/server.js", done: done }).on('start', () => {
+      browserSync({
+         proxy: "localhost:3000",  // local node app address
+         port: 5000,  // use *different* port than above
+         notify: true
+      });
+   })
+}
 
 const bundleSass = () => {
    return src('./src/scss/**/*.scss')
@@ -12,7 +26,40 @@ const bundleSass = () => {
       .pipe(compileSass().on('error', compileSass.logError))
       // .pipe(minifyCSS({ rebase: false }))
       .pipe(sourceMaps.write())
-      .pipe(dest('./dist/css/'));
+      .pipe(dest('./dist/css/'))
+      .pipe(browserSync.stream());
+}
+
+const webpackGulp = () => {
+   return src('./src/ts/backend/backendPage.ts')
+      .pipe(webpack({
+         entry: {
+            backendPage: './src/ts/backend/backendPage.ts',
+            main: './src/ts/frontend/app.ts'
+         },
+         mode: 'development',
+         devtool: false,
+         module: {
+            rules: [
+               {
+                  test: /\.ts$/,
+                  use: 'ts-loader',
+                  include: [path.resolve(__dirname, 'src/ts/')]
+               }
+            ]
+         },
+         resolve: {
+            extensions: ['.ts', '.js']
+         },
+         output: {
+            publicPath: 'dist',
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'dist/js/')
+         }
+      }
+      ))
+      .pipe(dest('./dist/js'))
+      .pipe(browserSync.stream());
 }
 
 const minify = () => {
@@ -64,11 +111,15 @@ const serverTsc = () => {
 //       .pipe(dest('./dist/js/'))
 // }
 
+nodemonStart();
 const devWatch = () => {
    bundleSass();
    // tsc();
    serverTsc();
+   watch('./src/ts/**/*.ts', webpackGulp);
    watch('./src/scss/**/*.scss', bundleSass);
+   watch('./dist/js/*.js', browserSync.reload);
+   watch('./dist/css/style.css', browserSync.reload);
    // watch('./src/ts/**/*.ts', tsc);
    watch('./src/server/*.ts', serverTsc);
 };

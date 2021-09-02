@@ -2,8 +2,8 @@
   "name": "personal_website",
   "version": "1.0.0",
   "description": "Personal website with informations about the person, bBackend to swtich informations and a secured area for business partner.",
-  "main": "server.js",
   "scripts": {
+    "watch": "webpack --watch",
     "serve": "webpack serve",
     "build:watch": "webpack --watch",
     "build": "webpack",
@@ -14,8 +14,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/livereload": "^0.9.1",
     "@types/mysql": "^2.15.19",
     "@types/node": "^16.3.2",
+    "browser-sync": "^2.27.5",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-livereload": "^4.0.2",
@@ -23,7 +25,6 @@
     "gulp-nodemon": "^2.5.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
-    "gulp-webpack-typescript-pipeline": "^17.0.1",
     "html-webpack-plugin": "^5.3.2",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.12",
@@ -32,7 +33,8 @@
     "typescript": "^4.3.5",
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.1.0"
+    "webpack-dev-server": "^4.1.0",
+    "webpack-stream": "^7.0.0"
   },
   "dependencies": {
     "express": "^4.17.1",

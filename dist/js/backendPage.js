@@ -122,24 +122,11 @@ __webpack_require__.r(__webpack_exports__);
 console.log("app successfully loaded");
 
 const addSVG = new _svg_AddSvg__WEBPACK_IMPORTED_MODULE_0__.default("be_addSvg", "#0f7dbd");
+document.body.append(addSVG.svg);
 const titleName = document.createElement("input");
 titleName.textContent;
 const titleNameBtn = document.createElement("button");
-titleNameBtn.innerHTML = "SENDENNN";
-console.log("test");
-fetch('/titlename')
-    .then(response => response.json())
-    .then(data => titleName.value = data.titleName);
-document.body.append(titleName, titleNameBtn, addSVG.svg);
-titleNameBtn.addEventListener("click", e => {
-    fetch("/titlename", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ titleName: titleName.value })
-    }).then();
-});
+titleNameBtn.innerHTML = "SsEsddnNN";
 
 })();
 
