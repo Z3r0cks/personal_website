@@ -2,23 +2,30 @@ console.log("app successfully loaded");
 
 import AddSVG from "../svg/AddSvg";
 
-const addSVG: AddSVG = new AddSVG("be_addSvg", "#0f7dbd");
+// const addSVG: AddSVG = new AddSVG("be_addSvg", "#0f7dbd");
+// addSVG.svg.addEventListener("click", () => {
+// })
 
-document.body.append(addSVG.svg);
+const componentMenu: HTMLDivElement = document.createElement("div");
+componentMenu.classList.add("c_devMenu");
 
+const componentArray: string[] = [];
 
+fetch('/selectContent')
+   .then(response => response.json())
+   .then(data => data.forEach(e => {
+      componentArray.push(e.Name);
+   }));
 
-const titleName: HTMLInputElement = document.createElement("input");
-titleName.textContent;
-const titleNameBtn: HTMLButtonElement = document.createElement("button");
-titleNameBtn.innerHTML = "SsEsddnNN";
-
-// console.log("test");
-
-// fetch('/titlename')
-// .then(response => response.json())
-// .then(data => titleName.value = data.titleName);
-
+setTimeout(() => {
+   console.log(componentArray.length);
+   componentArray.forEach(e => {
+      const cBtn: HTMLButtonElement = document.createElement("button");
+      cBtn.classList.add("c_devBtn");
+      cBtn.innerHTML = e;
+      componentMenu.append(cBtn);
+   })
+}, 200)
 
 // titleNameBtn.addEventListener("click", e => {
 //    fetch("/titlename", {
@@ -30,4 +37,4 @@ titleNameBtn.innerHTML = "SsEsddnNN";
 //    }).then();
 // });
 
-// document.body.append(titleName, titleNameBtn, addSVG.svg);
+document.body.append(componentMenu);

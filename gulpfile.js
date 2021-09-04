@@ -55,7 +55,7 @@ const webpackGulp = () => {
             publicPath: 'dist',
             filename: '[name].js',
             path: path.resolve(__dirname, 'dist/js/')
-         }
+         },
       }
       ))
       .pipe(dest('./dist/js'))
@@ -118,8 +118,8 @@ const devWatch = () => {
    serverTsc();
    watch('./src/ts/**/*.ts', webpackGulp);
    watch('./src/scss/**/*.scss', bundleSass);
-   watch('./dist/js/*.js', browserSync.reload);
-   watch('./dist/css/style.css', browserSync.reload);
+   // watch('./dist/js/*.js', browserSync.reload);
+   // watch('./dist/css/style.css', browserSync.reload);
    // watch('./src/ts/**/*.ts', tsc);
    watch('./src/server/*.ts', serverTsc);
 };

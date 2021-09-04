@@ -1,3 +1,10 @@
 export interface SqlCommands {
-   titleName: string
+   select: {
+      titleName: string,
+      selectcontent: string
+   },
+   post: {
+
+   }
+   // [key: string]: string
 }
