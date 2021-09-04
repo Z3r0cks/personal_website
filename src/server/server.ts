@@ -58,25 +58,66 @@ app.get("/test", async (req, res) => {
 
 // GET
 
-app.get("/titlename", async (req, res) => {
+// app.get("/titlename", async (req, res) => {
+//    const backend = new Backend();
+//    const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
+//    try {
+//       const response = await backend.executeSQL(sqlCommand.titleName) as TablePersonalWebsite;
+//       res.json({ titleName: response[0].Text_Content })
+//    } catch (error) {
+//       res.json({ err: true, msg: error });
+//    }
+// })
+
+// function select(value: string) {
+//    app.get(`${value}`, async (req, res) => {
+//       const backend = new Backend();
+//       const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
+//       try {
+//          const response = await backend.executeSQL(sqlCommand[value]) as TablePersonalWebsite;
+//          res.json({ titleName: response[0].Text_Content })
+//       } catch (error) 
+//          res.json({ err: true, msg: error });
+//       }
+//    })
+// }
+
+const pathArray: string[] = ["selectContent"];
+
+const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
+
+app.get("/selectContent", async (req, res) => {
    const backend = new Backend();
-   const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
    try {
-      const response = await backend.executeSQL(sqlCommand.titleName) as TablePersonalWebsite;
-      res.json({ titleName: response[0].Text_Content })
+      const response = await backend.executeSQL(sqlCommand.select["selectContent"]) as TablePersonalWebsite;
+      res.json(response)
+      // res.json({ Names: response.forEach(e => { return e.Name }) })
    } catch (error) {
       res.json({ err: true, msg: error });
    }
 })
 
-// POST
+// pathArray.forEach(e => {
+//    const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
+//    app.get(`/${e}`, async (req, res) => {
+//       const backend = new Backend();
+//       try {
+//          const response = await backend.executeSQL(sqlCommand.select[e]) as TablePersonalWebsite;
+//          res.json({ titleName: response[0].Text_Content })
+//       } catch (error) {
+//          res.json({ err: true, msg: error });
+//       }
+//    })
+//    app.post(`/${e}`, async (req, res) => {
+//       const backend = new Backend();
+//       try {
+//          const response = await backend.executeSQL(sqlCommand.post[e])
+//       } catch (error) {
+//          res.json({ err: true, msg: error });
+//       }
+//       res.sendStatus(200);
+//    })
+// })
 
-app.post("/titlename", async (req, res) => {
-   const backend = new Backend();
-   try {
-      const response = await backend.executeSQL("UPDATE `content` SET `Text_Content` = '" + req.body.titleName + "'")
-   } catch (error) {
-      res.json({ err: true, msg: error });
-   }
-   res.sendStatus(200);
-})
+
+// // POST
