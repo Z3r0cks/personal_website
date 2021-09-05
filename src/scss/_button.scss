@@ -43,4 +43,18 @@
          border: solid 2px $c1-second;
       }
    }
+
+   &--devBtn {
+      color: $c-white;
+      border-radius: 12px;
+      padding: 0.5rem;
+      background-color: $c1-second;
+      border: solid 2px transparent;
+      margin: 0.3rem;
+
+      &:hover {
+         background-color: transparent;
+         border: solid 2px $c1-second;
+      }
+   }
 }

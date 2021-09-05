@@ -1,10 +1,13 @@
 import SVG from './SVG';
 
 class AddSVG extends SVG {
-   constructor(className: string, fill: string) {
+   protected _id: string
+   constructor(className: string, id: string, fill: string) {
       super(className, fill);
+      this._id = id;
       this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      this.svg.setAttribute("class", className);
+      this.svg.classList.add(className);
+      this.svg.id = id;
       this.svg.setAttribute("viewBox", "0 0 512 512");
 
       this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
