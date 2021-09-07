@@ -17,10 +17,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class C_title extends _Component__WEBPACK_IMPORTED_MODULE_0__.default {
-    _type;
-    constructor(settings, type) {
+    _devTitle;
+    constructor(settings) {
         super(settings);
-        this._type = type;
+        this._devTitle = "c_title";
     }
     setSetting() {
         return {
@@ -29,7 +29,7 @@ class C_title extends _Component__WEBPACK_IMPORTED_MODULE_0__.default {
         };
     }
     setHtmlElement() {
-        return (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addHtmlElement)(this._type, "c_title");
+        return (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addHtmlElement)(this._settings.type, "c_title");
     }
 }
 
@@ -48,8 +48,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 class Component {
     _settings;
+    _devTitle = "";
     constructor(settings) {
         this._settings = settings;
+    }
+    getSetting() {
+        return this._settings;
+    }
+    getDevTitle() {
+        return this._devTitle;
     }
 }
 
@@ -287,7 +294,6 @@ __webpack_require__.r(__webpack_exports__);
         });
         let response = await fetch('/selectComponents');
         let data = await response.json();
-        console.log(data);
         data.forEach(e => {
             const cBtn = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addHtmlElement)("button", "btn btn--devBtn", "devBtn");
             cBtn.innerHTML = e.PUP_NAME;
@@ -321,13 +327,26 @@ __webpack_require__.r(__webpack_exports__);
                 titleInput.type = "text";
                 titleBtn.innerHTML = "submit";
                 componentWrapper.append(titleInput, titleBtn);
-                const newTitle = new _frontend_components_C_title__WEBPACK_IMPORTED_MODULE_0__.default({ color: "red", width: "50px" }, "h1");
-                console.log(newTitle);
+                const newTitle = new _frontend_components_C_title__WEBPACK_IMPORTED_MODULE_0__.default({ color: "red", width: "50px", type: "h1" });
+                saveBtnListener(newTitle, saveSVG);
+                console.log(newTitle.getSetting());
                 break;
             default:
                 break;
         }
         document.body.append(componentWrapper);
+    }
+    function saveBtnListener(component, saveBtn) {
+        saveBtn.svg.addEventListener("click", () => {
+            const test = JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() });
+            fetch("/addComponent", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
+            }).then();
+        });
     }
 })();
 

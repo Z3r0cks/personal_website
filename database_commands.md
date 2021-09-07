@@ -21,3 +21,8 @@ VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway
 //
 SELECT * FROM `content` WHERE `Name` = "title_name"
 
+INSERT INTO `personal_website`.`content`(`ID`,`DEV_NAME`,`SETTINGS`) VALUES ('1','test','{"screen": "50 inch"}')
+
+INSERT INTO `personal_website`.`content`(`ID`,`DEV_NAME`,`SETTINGS`) VALUES ('3','c_title','{"color":"red","width":"50px"}')
+
+INSERT INTO `personal_website`.`content`(`DEV_NAME`,`SETTINGS`) VALUES ('c_title','{"color":"red","width":"50px"}')

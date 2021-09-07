@@ -1,3 +1,4 @@
+import Component from "../frontend/components/Component";
 import C_title from "../frontend/components/C_title";
 import { addHtmlElement, removeElement } from "../helper/helper";
 import AddSVG from "../svg/AddSvg";
@@ -19,7 +20,6 @@ import SaveSvg from "../svg/SaveSvg";
 
       let response = await fetch('/selectComponents')
       let data = await response.json()
-      console.log(data);
 
       data.forEach(e => {
          const cBtn: HTMLButtonElement = addHtmlElement("button", "btn btn--devBtn", "devBtn") as HTMLButtonElement;
@@ -55,8 +55,9 @@ import SaveSvg from "../svg/SaveSvg";
             titleInput.type = "text";
             titleBtn.innerHTML = "submit";
             componentWrapper.append(titleInput, titleBtn)
-            const newTitle: C_title = new C_title({ color: "red", width: "50px" }, "h1");
-            console.log(newTitle);
+            const newTitle: C_title = new C_title({ color: "red", width: "50px", type: "h1" });
+            saveBtnListener(newTitle, saveSVG);
+            console.log(newTitle.getSetting());
             break;
 
          default:
@@ -65,6 +66,19 @@ import SaveSvg from "../svg/SaveSvg";
       document.body.append(componentWrapper);
    }
 
+
+   function saveBtnListener(component: Component, saveBtn: SaveSvg) {
+      saveBtn.svg.addEventListener("click", () => {
+         const test = JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
+         fetch("/addComponent", {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
+         }).then();
+      });
+   }
 
 
    // titleNameBtn.addEventListener("click", e => {

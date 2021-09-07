@@ -1,9 +1,11 @@
 interface RowDataPacket {
-   id: number;
-   Name: string;
-   Text_Content: string;
+   ID: number;
+   DEV_NAME: string;
+   SETTINGS: string;
 }
 
-export interface TablePersonalWebsite extends Array<RowDataPacket> {
-   
+export default interface TablePersonalWebsite extends Array<RowDataPacket> {
+   ID: number;
+   DEV_NAME: string;
+   SETTINGS: string;
 }

@@ -43,7 +43,8 @@ async function serverTsc(cb) {
       .pipe(sourceMaps.write())
       // TODO: set noSource to true
       // .pipe(minifyJS({ noSource: false }))
-      .pipe(dest('./dist/server/'));
+      .pipe(dest('./dist/server/'))
+      .pipe(browserSync.stream());
    cb();
 }
 

@@ -3,13 +3,14 @@ import Setting from '../../interfaces/Setting';
 import { addHtmlElement } from "../../helper/helper";
 
 export default class C_title extends Component {
-   protected _type: string
+   protected _devTitle: string
 
-   constructor(settings: Setting, type: string) {
+   constructor(settings: Setting) {
       super(settings)
-      this._type = type;
+      this._devTitle = "c_title";
    }
 
+   // TODO: delete?
    setSetting(): {} {
       return {
          color: this._settings.color,
@@ -18,6 +19,6 @@ export default class C_title extends Component {
    }
 
    setHtmlElement() {
-      return addHtmlElement(this._type, "c_title");
+      return addHtmlElement(this._settings.type, "c_title");
    }
 }

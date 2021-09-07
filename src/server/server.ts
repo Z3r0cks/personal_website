@@ -1,9 +1,10 @@
 import express from "express";
 import fs from 'fs';
+import { stringify } from "querystring";
 import { Backend } from "./Backend";
 import { HomePage } from "./HomePage";
 import { SqlCommands } from "./interfaces/SqlCommands";
-import { TablePersonalWebsite } from "./interfaces/TablePersonalWebsite";
+import TablePersonalWebsite from "./interfaces/TablePersonalWebsite";
 import { Page } from "./Page";
 
 const Port = process.env.Port || 3000;
@@ -96,6 +97,35 @@ app.get("/selectComponents", async (req, res) => {
       res.json({ err: true, msg: error });
    }
 })
+
+app.post("/addComponent", async (req, res) => {
+   const backend = new Backend();
+   // console.log(JSON.stringify(req.body));
+   // console.log("INSERT INTO `personal_website`.`content`(`DEV_NAME`,`SETTINGS`) VALUES ('" + req.body.devName + "','" + JSON.stringify(req.body.settings) + "')");
+   await backend.executeSQL("INSERT INTO `personal_website`.`content`(`DEV_NAME`,`SETTINGS`) VALUES ('" + req.body.devName + "','" + JSON.stringify(req.body.settings) + "')")
+   try {
+   } catch (error) {
+      res.json({ err: true, msg: error });
+   }
+   res.sendStatus(200);
+})
+
+function stringifySettings(req) {
+   let string: string;
+   req.forEach(e => {
+
+   })
+}
+
+// app.post("/addComponent", async (req, res) => {
+//    const backend = new Backend();
+//    try {
+//       const response = await backend.executeSQL("UPDATE `content` SET `Text_Content` = '" + req.body.titleName + "'")
+//    } catch (error) {
+//       res.json({ err: true, msg: error });
+//    }
+//    res.sendStatus(200);
+// })
 
 // pathArray.forEach(e => {
 //    const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());

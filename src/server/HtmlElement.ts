@@ -77,41 +77,6 @@ export class HtmlH1Element extends HtmlElement {
       this._isCloseTag = true;
    }
 }
-export class HtmlH2Element extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
-      this._tagName = "h2";
-      this._isCloseTag = true;
-   }
-}
-export class HtmlH3Element extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
-      this._tagName = "h3";
-      this._isCloseTag = true;
-   }
-}
-export class HtmlH4Element extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
-      this._tagName = "h4";
-      this._isCloseTag = true;
-   }
-}
-export class HtmlH5Element extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
-      this._tagName = "h5";
-      this._isCloseTag = true;
-   }
-}
-export class HtmlH6Element extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
-      this._tagName = "h6";
-      this._isCloseTag = true;
-   }
-}
 
 //////////////////////////////// NAV
 
