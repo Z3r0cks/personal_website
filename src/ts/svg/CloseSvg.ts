@@ -1,6 +1,6 @@
 import SVG from './SVG';
 
-class CloseSvg extends SVG {
+export default class CloseSvg extends SVG {
    protected _id: string
    constructor(className: string, id: string, fill: string) {
       super(className, fill);
@@ -16,5 +16,3 @@ class CloseSvg extends SVG {
       this.svg.appendChild(this.path);
    }
 }
-
-export default CloseSvg;

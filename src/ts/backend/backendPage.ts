@@ -1,13 +1,15 @@
+import C_title from "../frontend/components/C_title";
 import { addHtmlElement, removeElement } from "../helper/helper";
 import AddSVG from "../svg/AddSvg";
-import CloseSvg from "../svg/closeSvg";
+import CloseSvg from "../svg/CloseSvg";
+import SaveSvg from "../svg/SaveSvg";
 
 (async function main() {
    console.log("app successfully loaded");
    addAddSvg();
 
    async function addComponentMenu() {
-      const componentArray: string[] = [];
+      const componentArray: string[][] = [];
       const componentMenu: HTMLDivElement = addHtmlElement("div", "c_devMenu", "devMenu") as HTMLDivElement;
       const closeSvg: CloseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
       closeSvg.svg.addEventListener("click", () => {
@@ -15,16 +17,14 @@ import CloseSvg from "../svg/closeSvg";
          addAddSvg();
       })
 
-      let response = await fetch('/selectContent')
+      let response = await fetch('/selectComponents')
       let data = await response.json()
-      data.forEach(e => {
-         componentArray.push(e.Name);
-      });
+      console.log(data);
 
-      componentArray.forEach(e => {
+      data.forEach(e => {
          const cBtn: HTMLButtonElement = addHtmlElement("button", "btn btn--devBtn", "devBtn") as HTMLButtonElement;
-         cBtn.innerHTML = e;
-         cBtn.addEventListener("click", () => { componentBtnListener(e) })
+         cBtn.innerHTML = e.PUP_NAME;
+         cBtn.addEventListener("click", () => { componentBtnListener(e.DEV_NAME) })
          componentMenu.append(cBtn);
       })
       componentMenu.append(closeSvg.svg);
@@ -42,7 +42,8 @@ import CloseSvg from "../svg/closeSvg";
       removeElement("devMenu");
       const componentWrapper: HTMLDivElement = addHtmlElement("div", "be_comWrapper", "be_comWrapper") as HTMLDivElement;
       const closeSvg: CloseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
-      componentWrapper.append(closeSvg.svg)
+      const saveSVG: SaveSvg = new SaveSvg("be_saveSvg", "be_saveSvg", "#ff5454");;
+      componentWrapper.append(saveSVG.svg, closeSvg.svg)
       closeSvg.svg.addEventListener("click", () => {
          componentWrapper.remove();
          addAddSvg();
@@ -54,6 +55,8 @@ import CloseSvg from "../svg/closeSvg";
             titleInput.type = "text";
             titleBtn.innerHTML = "submit";
             componentWrapper.append(titleInput, titleBtn)
+            const newTitle: C_title = new C_title({ color: "red", width: "50px" }, "h1");
+            console.log(newTitle);
             break;
 
          default:

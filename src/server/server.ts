@@ -82,14 +82,14 @@ app.get("/test", async (req, res) => {
 //    })
 // }
 
-const pathArray: string[] = ["selectContent"];
+const pathArray: string[] = ["selectComponents"];
 
 const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
 
-app.get("/selectContent", async (req, res) => {
+app.get("/selectComponents", async (req, res) => {
    const backend = new Backend();
    try {
-      const response = await backend.executeSQL(sqlCommand.select["selectContent"]) as TablePersonalWebsite;
+      const response = await backend.executeSQL(sqlCommand.select["selectComponents"]) as TablePersonalWebsite;
       res.json(response)
       // res.json({ Names: response.forEach(e => { return e.Name }) })
    } catch (error) {

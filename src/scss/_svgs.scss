@@ -1,5 +1,6 @@
 .be_addSvg,
-.be_closeSvg {
+.be_closeSvg,
+.be_saveSvg {
    transition: $transition;
    display: block;
    width: 50px;
@@ -14,4 +15,10 @@
    position: absolute;
    right: 1rem;
    top: 1rem;
+}
+
+.be_saveSvg {
+   position: absolute;
+   right: 2rem;
+   top: 5rem;
 }
