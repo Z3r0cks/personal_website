@@ -2,13 +2,14 @@ import mysql, { Connection, MysqlError } from "mysql";
 import fs from 'fs';
 import { DatabaseConfig } from "./interfaces/databaseConfig";
 import { Html } from "./createHtml";
-import { HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement } from "./HtmlElement";
+import { HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement, HtmlMainElement } from "./HtmlElement";
 
 export abstract class Page {
    protected connection: Connection;
    protected html: Html;
    protected body: HtmlBodyElement;
    protected header: HtmlHeaderElement;
+   protected main: HtmlMainElement;
    protected footer: HtmlfooterElement;
 
    constructor() {

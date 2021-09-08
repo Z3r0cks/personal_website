@@ -4,13 +4,15 @@ import { addHtmlElement, removeElement } from "../helper/helper";
 import AddSVG from "../svg/AddSvg";
 import CloseSvg from "../svg/CloseSvg";
 import SaveSvg from "../svg/SaveSvg";
+import loadContent from "./loadContent";
 
 (async function main() {
    console.log("app successfully loaded");
+
+   await loadContent();
    addAddSvg();
 
    async function addComponentMenu() {
-      const componentArray: string[][] = [];
       const componentMenu: HTMLDivElement = addHtmlElement("div", "c_devMenu", "devMenu") as HTMLDivElement;
       const closeSvg: CloseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
       closeSvg.svg.addEventListener("click", () => {
@@ -66,7 +68,6 @@ import SaveSvg from "../svg/SaveSvg";
       document.body.append(componentWrapper);
    }
 
-
    function saveBtnListener(component: Component, saveBtn: SaveSvg) {
       saveBtn.svg.addEventListener("click", () => {
          const test = JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
@@ -77,6 +78,7 @@ import SaveSvg from "../svg/SaveSvg";
             },
             body: JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
          }).then();
+         location.reload();
       });
    }
 

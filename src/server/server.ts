@@ -83,26 +83,46 @@ app.get("/test", async (req, res) => {
 //    })
 // }
 
-const pathArray: string[] = ["selectComponents"];
+const pathArray: string[] = ["selectComponents", "selectContent"];
 
 const sqlCommand: SqlCommands = JSON.parse(fs.readFileSync("sqlCommands.json").toString());
 
-app.get("/selectComponents", async (req, res) => {
-   const backend = new Backend();
-   try {
-      const response = await backend.executeSQL(sqlCommand.select["selectComponents"]) as TablePersonalWebsite;
-      res.json(response)
-      // res.json({ Names: response.forEach(e => { return e.Name }) })
-   } catch (error) {
-      res.json({ err: true, msg: error });
-   }
+pathArray.forEach(e => {
+   app.get(`/${e}`, async (req, res) => {
+      const backend = new Backend();
+      try {
+         const response = await backend.executeSQL(sqlCommand.select[e]) as TablePersonalWebsite;
+         res.json(response)
+         // res.json({ Names: response.forEach(e => { return e.Name }) })
+      } catch (error) {
+         res.json({ err: true, msg: error });
+      }
+   })
 })
+// app.get("/selectComponents", async (req, res) => {
+//    const backend = new Backend();
+//    try {
+//       const response = await backend.executeSQL(sqlCommand.select["selectComponents"]) as TablePersonalWebsite;
+//       res.json(response)
+//       // res.json({ Names: response.forEach(e => { return e.Name }) })
+//    } catch (error) {
+//       res.json({ err: true, msg: error });
+//    }
+// })
 
 app.post("/addComponent", async (req, res) => {
    const backend = new Backend();
-   // console.log(JSON.stringify(req.body));
-   // console.log("INSERT INTO `personal_website`.`content`(`DEV_NAME`,`SETTINGS`) VALUES ('" + req.body.devName + "','" + JSON.stringify(req.body.settings) + "')");
    await backend.executeSQL("INSERT INTO `personal_website`.`content`(`DEV_NAME`,`SETTINGS`) VALUES ('" + req.body.devName + "','" + JSON.stringify(req.body.settings) + "')")
+   try {
+   } catch (error) {
+      res.json({ err: true, msg: error });
+   }
+   res.sendStatus(200);
+})
+
+app.post("/deleteComponent", async (req, res) => {
+   const backend = new Backend();
+   await backend.executeSQL("DELETE FROM `content` WHERE `content`.`ID` = " + req.body.id)
    try {
    } catch (error) {
       res.json({ err: true, msg: error });

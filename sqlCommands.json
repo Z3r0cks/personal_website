@@ -1,7 +1,8 @@
 {
    "select": {
       "titleName": "SELECT * FROM `content` WHERE `Name` = 'title_name'",
-      "selectComponents": "SELECT * FROM `components`"
+      "selectComponents": "SELECT * FROM `components`",
+      "selectContent": "SELECT * FROM `content`"
    },
    "post": {}
 }

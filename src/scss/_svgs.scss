@@ -1,6 +1,7 @@
 .be_addSvg,
 .be_closeSvg,
-.be_saveSvg {
+.be_saveSvg,
+.be_trashSvg {
    transition: $transition;
    display: block;
    width: 50px;

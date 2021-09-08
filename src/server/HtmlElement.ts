@@ -70,10 +70,10 @@ export class HtmlPElement extends HtmlElement {
 
 //////////////////////////////// H1-H6
 
-export class HtmlH1Element extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
+export class HtmlHElement extends HtmlElement {
+   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false, type: string) {
       super(htmlClasses, id, innerText, childElement);
-      this._tagName = "h1";
+      this._tagName = type;
       this._isCloseTag = true;
    }
 }

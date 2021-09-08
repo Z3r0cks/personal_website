@@ -2,6 +2,48 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/ts/backend/loadContent.ts":
+/*!***************************************!*\
+  !*** ./src/ts/backend/loadContent.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ loadContent)
+/* harmony export */ });
+/* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helper/helper */ "./src/ts/helper/helper.ts");
+/* harmony import */ var _svg_TrashSvg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../svg/TrashSvg */ "./src/ts/svg/TrashSvg.ts");
+
+
+async function loadContent() {
+    let response = await fetch('/selectContent');
+    let data = await response.json();
+    const contentWrapper = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addHtmlElement)("div", false, "be_contentWrapper");
+    data.forEach(e => {
+        const innerWrapper = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addHtmlElement)("div", "be_innerWrapper");
+        const trashSvg = new _svg_TrashSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_trashSvg", "be_contentTrash", "#ff5454");
+        const el = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addHtmlElement)("div", false);
+        trashSvg.svg.addEventListener("click", () => { trashHandler(e.ID); innerWrapper.remove(); });
+        el.innerHTML = (e.DEV_NAME);
+        innerWrapper.append(el, trashSvg.svg);
+        contentWrapper.append(innerWrapper);
+    });
+    function trashHandler(id) {
+        fetch("/deleteComponent", {
+            method: 'Post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        }).then();
+    }
+    document.body.appendChild(contentWrapper);
+}
+
+
+/***/ }),
+
 /***/ "./src/ts/frontend/components/C_title.ts":
 /*!***********************************************!*\
   !*** ./src/ts/frontend/components/C_title.ts ***!
@@ -79,7 +121,8 @@ function removeElement(elementID) {
 }
 function addHtmlElement(htmlTag, className, idName) {
     const newElement = document.createElement(htmlTag);
-    newElement.setAttribute("class", className);
+    if (className)
+        newElement.setAttribute("class", className);
     if (idName)
         newElement.id = idName;
     return newElement;
@@ -206,6 +249,37 @@ class SaveSvg extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
 }
 
 
+/***/ }),
+
+/***/ "./src/ts/svg/TrashSvg.ts":
+/*!********************************!*\
+  !*** ./src/ts/svg/TrashSvg.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TrashSvg)
+/* harmony export */ });
+/* harmony import */ var _SVG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SVG */ "./src/ts/svg/SVG.ts");
+
+class TrashSvg extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
+    _id;
+    constructor(className, id, fill) {
+        super(className, fill);
+        this._id = id;
+        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        this.svg.classList.add(className);
+        this.svg.id = id;
+        this.svg.setAttribute("viewBox", "0 0 512 512");
+        this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
+        this.path.setAttribute("fill", fill);
+        this.path.setAttributeNS(null, "d", "M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z");
+        this.svg.appendChild(this.path);
+    }
+}
+
+
 /***/ })
 
 /******/ 	});
@@ -276,6 +350,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _svg_AddSvg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../svg/AddSvg */ "./src/ts/svg/AddSvg.ts");
 /* harmony import */ var _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../svg/CloseSvg */ "./src/ts/svg/CloseSvg.ts");
 /* harmony import */ var _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../svg/SaveSvg */ "./src/ts/svg/SaveSvg.ts");
+/* harmony import */ var _loadContent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loadContent */ "./src/ts/backend/loadContent.ts");
+
 
 
 
@@ -283,9 +359,9 @@ __webpack_require__.r(__webpack_exports__);
 
 (async function main() {
     console.log("app successfully loaded");
+    await (0,_loadContent__WEBPACK_IMPORTED_MODULE_5__.default)();
     addAddSvg();
     async function addComponentMenu() {
-        const componentArray = [];
         const componentMenu = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addHtmlElement)("div", "c_devMenu", "devMenu");
         const closeSvg = new _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_3__.default("be_closeSvg", "be_closeSvg", "#ff5454");
         closeSvg.svg.addEventListener("click", () => {
@@ -346,6 +422,7 @@ __webpack_require__.r(__webpack_exports__);
                 },
                 body: JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
             }).then();
+            location.reload();
         });
     }
 })();
