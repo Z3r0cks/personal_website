@@ -1,17 +1,77 @@
 import Setting from '../../interfaces/Setting';
+import SaveSvg from '../../svg/SaveSvg';
+import CloseSvg from '../../svg/CloseSvg';
+import SettingsSvg from '../../svg/SettingsSVG';
+import { addErrorElement, addHtmlElement, componentWrapper, removeElement } from '../../helper/helper';
 
 export default abstract class Component {
-   protected _settings: Setting;
+   protected _coseSvg: CloseSvg;
+   protected _saveSVG: SaveSvg;
+   protected _settingsSVG: SettingsSvg;
    protected _devTitle: string = "";
+   protected _innerWrapper: HTMLDivElement;
+   protected _allElements: HTMLElement[];
+   protected _settings: Setting;
 
-   constructor(settings: Setting) {
-      this._settings = settings;
+   constructor() {
+      this._coseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
+      this._saveSVG = new SaveSvg("be_saveSvg", "be_saveSvg", "#ff5454");;
+      this._settingsSVG = new SettingsSvg("be_settingsSvg", "be_settingsSvg", "#ff5454");
+      this._innerWrapper = addHtmlElement("div", "be_innerCompWrapper") as HTMLDivElement;
+      this._allElements = [];
+      this._settings = { color: "", content: "", width: "", type: "" }
+      this.createOverlay();
    }
 
-   getSetting() {
-      return this._settings;
+   createOverlay() {
+      this._innerWrapper.append(this._settingsSVG.svg, this._saveSVG.svg, this._coseSvg.svg)
+      componentWrapper.append(this._innerWrapper);
+      this.createBackendHtmlElemnts();
    }
-   getDevTitle() {
-      return this._devTitle;
+
+   createBackendHtmlElemnts() { }
+
+   setSetting(ElObjects: {}) {
+      for (const [key, value] of Object.entries(ElObjects)) {
+         this._innerWrapper.append(value as HTMLElement);
+      }
+      componentWrapper.append(this._innerWrapper);
+      this._saveSVG.svg.addEventListener("click", () => {
+         if (this.checkNecessaryInput(ElObjects)) {
+            console.log("correct");
+            for (const [key, value] of Object.entries(ElObjects)) {
+               this._settings[key] = (value as HTMLInputElement).value
+            }
+            this.postContent();
+         }
+         else {
+            if (document.getElementById("titleError")) {
+               removeElement("titleError");
+            }
+            console.log("Not correct");
+            const errorP = addErrorElement();
+            this._innerWrapper.appendChild(errorP);
+         }
+      })
+
+   }
+
+   checkNecessaryInput(ElObjects: {}) {
+      let inputDone: boolean = true;
+      for (const [key, value] of Object.entries(ElObjects)) {
+         if ((value as HTMLInputElement).value == undefined || (value as HTMLInputElement).value == "") inputDone = false;
+      }
+      return inputDone;
+   }
+
+   postContent() {
+      fetch("/addComponent", {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({ devName: this._devTitle, settings: this._settings })
+      }).then();
+      location.reload();
    }
 }

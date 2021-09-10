@@ -2,7 +2,8 @@ import mysql, { Connection, MysqlError } from "mysql";
 import fs from 'fs';
 import { DatabaseConfig } from "./interfaces/databaseConfig";
 import { Html } from "./createHtml";
-import { HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement, HtmlMainElement } from "./HtmlElement";
+import { HtmlElement, HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement, HtmlMainElement, HtmlHElement } from "./HtmlElement";
+import TablePersonalWebsite from "./interfaces/TablePersonalWebsite";
 
 export abstract class Page {
    protected connection: Connection;
@@ -35,6 +36,27 @@ export abstract class Page {
          })
       })
    }
-   abstract buildPage(): void;
-   abstract getHtmlString(): string;
+   async buildPage() {
+
+   };
+
+   protected async getContent(): Promise<HtmlElement[]> {
+      const response: TablePersonalWebsite = await this.query("SELECT * FROM `content`") as TablePersonalWebsite;
+      const htmlList: HtmlElement[] = [];
+      response.forEach(e => {
+         const settings = JSON.parse(e.SETTINGS);
+         switch (e.DEV_NAME) {
+            case "c_title":
+               htmlList.push(new HtmlHElement("c_head", false, settings.content, false, settings.type))
+               break;
+         }
+      })
+      return htmlList
+   }
+
+   getHtmlString(): string {
+      return this.html.newHTML([
+         this.body
+      ]);
+   };
 }

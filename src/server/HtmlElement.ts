@@ -22,6 +22,7 @@ export abstract class HtmlElement {
       });
       return string
    }
+
    createNewElement(): string {
       let openTag: string;
       if (this._htmlClasses != false) {
@@ -41,8 +42,8 @@ export abstract class HtmlElement {
 //////////////////////////////// DIV
 
 export class HtmlBodyElement extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
+   constructor(childElement: HtmlElement[]) {
+      super(false, false, false, childElement);
       this._tagName = "body";
       this._isCloseTag = true;
    }
@@ -98,7 +99,6 @@ export class HtmlButtonElement extends HtmlElement {
    }
 }
 
-
 //////////////////////////////// HEADER
 
 export class HtmlHeaderElement extends HtmlElement {
@@ -112,8 +112,8 @@ export class HtmlHeaderElement extends HtmlElement {
 //////////////////////////////// MAIN
 
 export class HtmlMainElement extends HtmlElement {
-   constructor(htmlClasses: string | false, id: string | false, innerText: string | false, childElement: HtmlElement[] | false) {
-      super(htmlClasses, id, innerText, childElement);
+   constructor(childElement: HtmlElement[] | false) {
+      super(false, false, false, childElement);
       this._tagName = "main";
       this._isCloseTag = true;
    }

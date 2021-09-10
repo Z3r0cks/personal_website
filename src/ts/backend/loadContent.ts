@@ -1,12 +1,9 @@
-import { METHODS } from "http";
-import { addHtmlElement, removeElement } from "../helper/helper";
+import { addHtmlElement, componentWrapper } from "../helper/helper";
 import TrashSvg from "../svg/TrashSvg";
 
 export default async function loadContent() {
    let response = await fetch('/selectContent')
    let data = await response.json()
-
-   const contentWrapper: HTMLDivElement = addHtmlElement("div", false, "be_contentWrapper") as HTMLDivElement
 
    data.forEach(e => {
       const innerWrapper: HTMLDivElement = addHtmlElement("div", "be_innerWrapper") as HTMLDivElement
@@ -16,7 +13,7 @@ export default async function loadContent() {
 
       el.innerHTML = (e.DEV_NAME);
       innerWrapper.append(el, trashSvg.svg)
-      contentWrapper.append(innerWrapper);
+      componentWrapper.append(innerWrapper);
    });
 
    function trashHandler(id: number) {
@@ -28,6 +25,4 @@ export default async function loadContent() {
          body: JSON.stringify({ id: id })
       }).then();
    }
-
-   document.body.appendChild(contentWrapper);
 }

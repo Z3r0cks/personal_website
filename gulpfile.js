@@ -81,7 +81,7 @@ function webpackGulp() {
 }
 
 async function bundleSass() {
-   src('./src/scss/**/*.scss')
+   src('./src/scss/style.scss')
       .pipe(sourceMaps.init())
       .pipe(compileSass().on('error', compileSass.logError))
       // .pipe(minifyCSS({ rebase: false }))

@@ -1,24 +1,18 @@
 import Component from './Component'
-import Setting from '../../interfaces/Setting';
-import { addHtmlElement } from "../../helper/helper";
+import { addBackendInput, componentWrapper } from "../../helper/helper";
 
 export default class C_title extends Component {
    protected _devTitle: string
 
-   constructor(settings: Setting) {
-      super(settings)
+   constructor() {
+      super()
       this._devTitle = "c_title";
    }
 
-   // TODO: delete?
-   setSetting(): {} {
-      return {
-         color: this._settings.color,
-         with: this._settings.width
-      }
-   }
-
-   setHtmlElement() {
-      return addHtmlElement(this._settings.type, "c_title");
+   createBackendHtmlElemnts() {
+      const titleInput = addBackendInput("text", false)
+      const type = addBackendInput("text", "h2", "Type")
+      const color = addBackendInput("text", "white", "Farbe")
+      this.setSetting({ content: titleInput, type: type, color: color })
    }
 }

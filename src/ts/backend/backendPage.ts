@@ -1,10 +1,9 @@
-import Component from "../frontend/components/Component";
 import C_title from "../frontend/components/C_title";
-import { addHtmlElement, removeElement } from "../helper/helper";
+import { addHtmlElement, removeElement, componentWrapper } from "../helper/helper";
 import AddSVG from "../svg/AddSvg";
 import CloseSvg from "../svg/CloseSvg";
-import SaveSvg from "../svg/SaveSvg";
 import loadContent from "./loadContent";
+
 
 (async function main() {
    console.log("app successfully loaded");
@@ -42,24 +41,14 @@ import loadContent from "./loadContent";
 
    function componentBtnListener(componentName: string) {
       removeElement("devMenu");
-      const componentWrapper: HTMLDivElement = addHtmlElement("div", "be_comWrapper", "be_comWrapper") as HTMLDivElement;
       const closeSvg: CloseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
-      const saveSVG: SaveSvg = new SaveSvg("be_saveSvg", "be_saveSvg", "#ff5454");;
-      componentWrapper.append(saveSVG.svg, closeSvg.svg)
       closeSvg.svg.addEventListener("click", () => {
          componentWrapper.remove();
          addAddSvg();
       })
       switch (componentName) {
          case "c_title":
-            const titleInput: HTMLInputElement = addHtmlElement("input", "be_titleElement", "be_titleElement") as HTMLInputElement;
-            const titleBtn: HTMLButtonElement = addHtmlElement("button", "be_titleSubmit", "be_titleSubmitt") as HTMLButtonElement;
-            titleInput.type = "text";
-            titleBtn.innerHTML = "submit";
-            componentWrapper.append(titleInput, titleBtn)
-            const newTitle: C_title = new C_title({ color: "red", width: "50px", type: "h1" });
-            saveBtnListener(newTitle, saveSVG);
-            console.log(newTitle.getSetting());
+            new C_title();
             break;
 
          default:
@@ -67,29 +56,4 @@ import loadContent from "./loadContent";
       }
       document.body.append(componentWrapper);
    }
-
-   function saveBtnListener(component: Component, saveBtn: SaveSvg) {
-      saveBtn.svg.addEventListener("click", () => {
-         const test = JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
-         fetch("/addComponent", {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ devName: component.getDevTitle(), settings: component.getSetting() })
-         }).then();
-         location.reload();
-      });
-   }
-
-
-   // titleNameBtn.addEventListener("click", e => {
-   //    fetch("/titlename", {
-   //       method: 'POST',
-   //       headers: {
-   //          'Content-Type': 'application/json'
-   //       },
-   //       body: JSON.stringify({ titleName: titleName.value })
-   //    }).then();
-   // });
 })();

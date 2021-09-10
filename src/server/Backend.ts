@@ -7,7 +7,7 @@ export class Backend extends Page {
       return this.query(query)
    }
 
-   buildPage() { }
+   async buildPage() { }
    getHtmlString() {
       return "";
    }

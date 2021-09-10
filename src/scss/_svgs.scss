@@ -1,11 +1,12 @@
 .be_addSvg,
 .be_closeSvg,
 .be_saveSvg,
-.be_trashSvg {
+.be_trashSvg,
+.be_settingsSvg {
    transition: $transition;
    display: block;
-   width: 50px;
-   height: 50px;
+   width: 35px;
+   height: 35px;
    margin: 0 auto;
 
    &:hover {
@@ -15,11 +16,14 @@
 .be_closeSvg {
    position: absolute;
    right: 1rem;
-   top: 1rem;
 }
 
 .be_saveSvg {
    position: absolute;
-   right: 2rem;
-   top: 5rem;
+   right: 3.5rem;
+}
+
+.be_settingsSvg {
+   position: absolute;
+   right: 6.2rem;
 }
