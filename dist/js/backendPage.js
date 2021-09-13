@@ -2,6 +2,112 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/ts/backend/BackendMenu/BackendMenuTab.ts":
+/*!******************************************************!*\
+  !*** ./src/ts/backend/BackendMenu/BackendMenuTab.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BackendMenuTab)
+/* harmony export */ });
+/* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helper/helper */ "./src/ts/helper/helper.ts");
+/* harmony import */ var _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../svg/CloseSvg */ "./src/ts/svg/CloseSvg.ts");
+
+
+class BackendMenuTab {
+    _name;
+    _wrapper;
+    _closeSVG;
+    constructor(name) {
+        this._closeSVG = new _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_closeSvg be_closeSvg__tabsvg", "", "#effcef");
+        this._name = name;
+        this._wrapper = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addHtmlElement)("div", "be_tabWrapper");
+        document.body.appendChild(this._wrapper);
+    }
+    createMenu(htmlElements) {
+        this._wrapper.append(this._closeSVG.svg);
+        htmlElements.forEach(e => {
+            this._wrapper.appendChild(e);
+        });
+    }
+    checkNecessaryInput(inputElements) {
+        let inputDone = true;
+        inputElements.forEach(e => {
+            if (e.value == undefined || e.value == "")
+                inputDone = false;
+        });
+        return inputDone;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/ts/backend/BackendMenu/BackendSetComponents.ts":
+/*!************************************************************!*\
+  !*** ./src/ts/backend/BackendMenu/BackendSetComponents.ts ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BackendSetComponent)
+/* harmony export */ });
+/* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helper/helper */ "./src/ts/helper/helper.ts");
+/* harmony import */ var _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../svg/SaveSvg */ "./src/ts/svg/SaveSvg.ts");
+/* harmony import */ var _BackendMenuTab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BackendMenuTab */ "./src/ts/backend/BackendMenu/BackendMenuTab.ts");
+
+
+
+class BackendSetComponent extends _BackendMenuTab__WEBPACK_IMPORTED_MODULE_2__.default {
+    _delteSaveSVG;
+    _addSaveSVG;
+    _descr_delete;
+    _descr_add;
+    _inputDEV_NAME;
+    _inputPUP_NAME;
+    _inputDESCR;
+    _myqlDEV_NAME;
+    _mysqlPUP_NAME;
+    _mysqlDESCR;
+    constructor() {
+        super("Components");
+        this._delteSaveSVG = new _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_saveSvg be_saveSvg__tabsvg", "", "#effcef");
+        this._addSaveSVG = new _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_saveSvg be_saveSvg__tabsvg", "", "#effcef");
+        this._inputDEV_NAME = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendInput)("text", "DEV_NAME");
+        this._inputPUP_NAME = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendInput)("text", "PUP_NAME");
+        this._inputDESCR = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendInput)("text", "DESCR");
+        this._descr_add = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendP)("Componente hinzufügen");
+        this._descr_delete = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendP)("Component löschen");
+        this._myqlDEV_NAME = "";
+        this._mysqlPUP_NAME = "";
+        this._mysqlDESCR = "";
+        console.log("test");
+        this.createMenu([this._descr_add, this._inputDEV_NAME, this._inputPUP_NAME, this._inputDESCR, this._addSaveSVG.svg, this._descr_delete, this._delteSaveSVG.svg]);
+        this.addHandler([this._inputDEV_NAME, this._inputPUP_NAME, this._inputDESCR]);
+    }
+    addHandler(NecessaryInputElemts) {
+        this._closeSVG.svg.addEventListener("click", () => {
+            this._wrapper.remove();
+        });
+        this._addSaveSVG.svg.addEventListener("click", () => {
+            if (this.checkNecessaryInput(NecessaryInputElemts)) {
+                fetch("/ad", {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ devName: this._inputDEV_NAME.value, pupName: this._inputPUP_NAME.value, descr: this._inputDESCR.value })
+                });
+            }
+        });
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/ts/backend/loadContent.ts":
 /*!***************************************!*\
   !*** ./src/ts/backend/loadContent.ts ***!
@@ -29,7 +135,7 @@ async function loadContent() {
         _helper_helper__WEBPACK_IMPORTED_MODULE_0__.componentWrapper.append(innerWrapper);
     });
     function trashHandler(id) {
-        fetch("/deleteComponent", {
+        fetch("/deleteContent", {
             method: 'Post',
             headers: {
                 'Content-Type': 'application/json'
@@ -147,7 +253,7 @@ class Component {
         return inputDone;
     }
     postContent() {
-        fetch("/addComponent", {
+        fetch("/addContent", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -173,6 +279,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "removeElement": () => (/* binding */ removeElement),
 /* harmony export */   "addHtmlElement": () => (/* binding */ addHtmlElement),
 /* harmony export */   "addBackendDiv": () => (/* binding */ addBackendDiv),
+/* harmony export */   "addBackendP": () => (/* binding */ addBackendP),
 /* harmony export */   "addBackendInput": () => (/* binding */ addBackendInput),
 /* harmony export */   "addErrorElement": () => (/* binding */ addErrorElement)
 /* harmony export */ });
@@ -191,6 +298,11 @@ function addHtmlElement(htmlTag, className, idName) {
 function addBackendDiv() {
     const div = addHtmlElement("div", "be_div");
     return div;
+}
+function addBackendP(innerHTML) {
+    const p = addHtmlElement("p", "be_p");
+    p.innerHTML = innerHTML;
+    return p;
 }
 function addBackendInput(type, defaultValue, innerHTML) {
     const input = addHtmlElement("input", "be_input");
@@ -224,18 +336,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SVG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SVG */ "./src/ts/svg/SVG.ts");
 
 class AddSVG extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
-    _id;
     constructor(className, id, fill) {
-        super(className, fill);
-        this._id = id;
-        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.classList.add(className);
-        this.svg.id = id;
-        this.svg.setAttribute("viewBox", "0 0 512 512");
-        this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
-        this.path.setAttribute("fill", fill);
+        super(className, id, fill);
         this.path.setAttributeNS(null, "d", "M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z");
-        this.svg.appendChild(this.path);
     }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddSVG);
@@ -256,18 +359,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SVG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SVG */ "./src/ts/svg/SVG.ts");
 
 class CloseSvg extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
-    _id;
     constructor(className, id, fill) {
-        super(className, fill);
-        this._id = id;
-        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.classList.add(className);
-        this.svg.id = id;
-        this.svg.setAttribute("viewBox", "0 0 512 512");
-        this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
-        this.path.setAttribute("fill", fill);
+        super(className, id, fill);
         this.path.setAttributeNS(null, "d", "M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 394c0 3.3-2.7 6-6 6H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h404c3.3 0 6 2.7 6 6v340zM356.5 194.6L295.1 256l61.4 61.4c4.6 4.6 4.6 12.1 0 16.8l-22.3 22.3c-4.6 4.6-12.1 4.6-16.8 0L256 295.1l-61.4 61.4c-4.6 4.6-12.1 4.6-16.8 0l-22.3-22.3c-4.6-4.6-4.6-12.1 0-16.8l61.4-61.4-61.4-61.4c-4.6-4.6-4.6-12.1 0-16.8l22.3-22.3c4.6-4.6 12.1-4.6 16.8 0l61.4 61.4 61.4-61.4c4.6-4.6 12.1-4.6 16.8 0l22.3 22.3c4.7 4.6 4.7 12.1 0 16.8z");
-        this.svg.appendChild(this.path);
     }
 }
 
@@ -287,10 +381,13 @@ __webpack_require__.r(__webpack_exports__);
 class SVG {
     svg;
     path;
-    constructor(className, fill) {
+    constructor(className, id, fill) {
         this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.setAttribute("class", className);
         this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
+        this.svg.setAttribute("viewBox", "0 0 512 512");
+        this.path.setAttribute("fill", fill);
+        this.svg.setAttribute("class", className);
+        this.svg.id = id;
         this.path.setAttribute("fill", fill);
         this.svg.appendChild(this.path);
     }
@@ -313,18 +410,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SVG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SVG */ "./src/ts/svg/SVG.ts");
 
 class SaveSvg extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
-    _id;
     constructor(className, id, fill) {
-        super(className, fill);
-        this._id = id;
-        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.classList.add(className);
-        this.svg.id = id;
-        this.svg.setAttribute("viewBox", "0 0 512 512");
-        this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
-        this.path.setAttribute("fill", fill);
+        super(className, id, fill);
         this.path.setAttributeNS(null, "d", "M433.941 129.941l-83.882-83.882A48 48 0 0 0 316.118 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V163.882a48 48 0 0 0-14.059-33.941zM272 80v80H144V80h128zm122 352H54a6 6 0 0 1-6-6V86a6 6 0 0 1 6-6h42v104c0 13.255 10.745 24 24 24h176c13.255 0 24-10.745 24-24V83.882l78.243 78.243a6 6 0 0 1 1.757 4.243V426a6 6 0 0 1-6 6zM224 232c-48.523 0-88 39.477-88 88s39.477 88 88 88 88-39.477 88-88-39.477-88-88-88zm0 128c-22.056 0-40-17.944-40-40s17.944-40 40-40 40 17.944 40 40-17.944 40-40 40z");
-        this.svg.appendChild(this.path);
     }
 }
 
@@ -344,17 +432,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SVG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SVG */ "./src/ts/svg/SVG.ts");
 
 class SettingsSvg extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
-    _id;
     constructor(className, id, fill) {
-        super(className, fill);
-        this._id = id;
-        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.classList.add(className);
-        this.svg.id = id;
-        this.svg.setAttribute("viewBox", "0 0 512 512");
-        this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
+        super(className, id, fill);
         const secondPath = document.createElementNS('http://www.w3.org/2000/svg', "path");
-        this.path.setAttribute("fill", fill);
         secondPath.setAttribute("fill", fill);
         secondPath.setAttributeNS(null, "d", "M454.2,189.101l-33.6-5.7c-3.5-11.3-8-22.2-13.5-32.6l19.8-27.7c8.4-11.8,7.1-27.9-3.2-38.1l-29.8-29.8 c-5.6-5.6-13-8.7-20.9-8.7c-6.2,0-12.1,1.9-17.1,5.5l-27.8,19.8c-10.8-5.7-22.1-10.4-33.8-13.9l-5.6-33.2 c-2.4-14.3-14.7-24.7-29.2-24.7h-42.1c-14.5,0-26.8,10.4-29.2,24.7l-5.8,34c-11.2,3.5-22.1,8.1-32.5,13.7l-27.5-19.8 c-5-3.6-11-5.5-17.2-5.5c-7.9,0-15.4,3.1-20.9,8.7l-29.9,29.8c-10.2,10.2-11.6,26.3-3.2,38.1l20,28.1 c-5.5,10.5-9.9,21.4-13.3,32.7l-33.2,5.6c-14.3,2.4-24.7,14.7-24.7,29.2v42.1c0,14.5,10.4,26.8,24.7,29.2l34,5.8 c3.5,11.2,8.1,22.1,13.7,32.5l-19.7,27.4c-8.4,11.8-7.1,27.9,3.2,38.1l29.8,29.8c5.6,5.6,13,8.7,20.9,8.7c6.2,0,12.1-1.9,17.1-5.5 l28.1-20c10.1,5.3,20.7,9.6,31.6,13l5.6,33.6c2.4,14.3,14.7,24.7,29.2,24.7h42.2c14.5,0,26.8-10.4,29.2-24.7l5.7-33.6 c11.3-3.5,22.2-8,32.6-13.5l27.7,19.8c5,3.6,11,5.5,17.2,5.5l0,0c7.9,0,15.3-3.1,20.9-8.7l29.8-29.8c10.2-10.2,11.6-26.3,3.2-38.1 l-19.8-27.8c5.5-10.5,10.1-21.4,13.5-32.6l33.6-5.6c14.3-2.4,24.7-14.7,24.7-29.2v-42.1 C478.9,203.801,468.5,191.501,454.2,189.101z M451.9,260.401c0,1.3-0.9,2.4-2.2,2.6l-42,7c-5.3,0.9-9.5,4.8-10.8,9.9 c-3.8,14.7-9.6,28.8-17.4,41.9c-2.7,4.6-2.5,10.3,0.6,14.7l24.7,34.8c0.7,1,0.6,2.5-0.3,3.4l-29.8,29.8c-0.7,0.7-1.4,0.8-1.9,0.8 c-0.6,0-1.1-0.2-1.5-0.5l-34.7-24.7c-4.3-3.1-10.1-3.3-14.7-0.6c-13.1,7.8-27.2,13.6-41.9,17.4c-5.2,1.3-9.1,5.6-9.9,10.8l-7.1,42 c-0.2,1.3-1.3,2.2-2.6,2.2h-42.1c-1.3,0-2.4-0.9-2.6-2.2l-7-42c-0.9-5.3-4.8-9.5-9.9-10.8c-14.3-3.7-28.1-9.4-41-16.8 c-2.1-1.2-4.5-1.8-6.8-1.8c-2.7,0-5.5,0.8-7.8,2.5l-35,24.9c-0.5,0.3-1,0.5-1.5,0.5c-0.4,0-1.2-0.1-1.9-0.8l-29.8-29.8 c-0.9-0.9-1-2.3-0.3-3.4l24.6-34.5c3.1-4.4,3.3-10.2,0.6-14.8c-7.8-13-13.8-27.1-17.6-41.8c-1.4-5.1-5.6-9-10.8-9.9l-42.3-7.2 c-1.3-0.2-2.2-1.3-2.2-2.6v-42.1c0-1.3,0.9-2.4,2.2-2.6l41.7-7c5.3-0.9,9.6-4.8,10.9-10c3.7-14.7,9.4-28.9,17.1-42 c2.7-4.6,2.4-10.3-0.7-14.6l-24.9-35c-0.7-1-0.6-2.5,0.3-3.4l29.8-29.8c0.7-0.7,1.4-0.8,1.9-0.8c0.6,0,1.1,0.2,1.5,0.5l34.5,24.6 c4.4,3.1,10.2,3.3,14.8,0.6c13-7.8,27.1-13.8,41.8-17.6c5.1-1.4,9-5.6,9.9-10.8l7.2-42.3c0.2-1.3,1.3-2.2,2.6-2.2h42.1 c1.3,0,2.4,0.9,2.6,2.2l7,41.7c0.9,5.3,4.8,9.6,10,10.9c15.1,3.8,29.5,9.7,42.9,17.6c4.6,2.7,10.3,2.5,14.7-0.6l34.5-24.8 c0.5-0.3,1-0.5,1.5-0.5c0.4,0,1.2,0.1,1.9,0.8l29.8,29.8c0.9,0.9,1,2.3,0.3,3.4l-24.7,34.7c-3.1,4.3-3.3,10.1-0.6,14.7 c7.8,13.1,13.6,27.2,17.4,41.9c1.3,5.2,5.6,9.1,10.8,9.9l42,7.1c1.3,0.2,2.2,1.3,2.2,2.6v42.1H451.9z");
         this.path.setAttributeNS(null, "d", "M239.4,136.001c-57,0-103.3,46.3-103.3,103.3s46.3,103.3,103.3,103.3s103.3-46.3,103.3-103.3S296.4,136.001,239.4,136.001z M239.4,315.601c-42.1,0-76.3-34.2-76.3-76.3s34.2-76.3,76.3-76.3s76.3,34.2,76.3,76.3S281.5,315.601,239.4,315.601z");
@@ -378,18 +458,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SVG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SVG */ "./src/ts/svg/SVG.ts");
 
 class TrashSvg extends _SVG__WEBPACK_IMPORTED_MODULE_0__.default {
-    _id;
     constructor(className, id, fill) {
-        super(className, fill);
-        this._id = id;
-        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg.classList.add(className);
-        this.svg.id = id;
-        this.svg.setAttribute("viewBox", "0 0 512 512");
-        this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
-        this.path.setAttribute("fill", fill);
+        super(className, id, fill);
         this.path.setAttributeNS(null, "d", "M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z");
-        this.svg.appendChild(this.path);
     }
 }
 
@@ -463,7 +534,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helper/helper */ "./src/ts/helper/helper.ts");
 /* harmony import */ var _svg_AddSvg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../svg/AddSvg */ "./src/ts/svg/AddSvg.ts");
 /* harmony import */ var _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../svg/CloseSvg */ "./src/ts/svg/CloseSvg.ts");
-/* harmony import */ var _loadContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loadContent */ "./src/ts/backend/loadContent.ts");
+/* harmony import */ var _BackendMenu_BackendSetComponents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BackendMenu/BackendSetComponents */ "./src/ts/backend/BackendMenu/BackendSetComponents.ts");
+/* harmony import */ var _loadContent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loadContent */ "./src/ts/backend/loadContent.ts");
+
 
 
 
@@ -471,7 +544,8 @@ __webpack_require__.r(__webpack_exports__);
 
 (async function main() {
     console.log("app successfully loaded");
-    await (0,_loadContent__WEBPACK_IMPORTED_MODULE_4__.default)();
+    const test = new _BackendMenu_BackendSetComponents__WEBPACK_IMPORTED_MODULE_4__.default();
+    await (0,_loadContent__WEBPACK_IMPORTED_MODULE_5__.default)();
     addAddSvg();
     async function addComponentMenu() {
         const componentMenu = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addHtmlElement)("div", "c_devMenu", "devMenu");

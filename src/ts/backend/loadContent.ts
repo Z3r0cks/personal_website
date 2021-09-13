@@ -17,7 +17,7 @@ export default async function loadContent() {
    });
 
    function trashHandler(id: number) {
-      fetch("/deleteComponent", {
+      fetch("/deleteContent", {
          method: 'Post',
          headers: {
             'Content-Type': 'application/json'

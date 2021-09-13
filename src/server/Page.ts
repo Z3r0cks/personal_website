@@ -2,7 +2,7 @@ import mysql, { Connection, MysqlError } from "mysql";
 import fs from 'fs';
 import { DatabaseConfig } from "./interfaces/databaseConfig";
 import { Html } from "./createHtml";
-import { HtmlElement, HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement, HtmlMainElement, HtmlHElement } from "./HtmlElement";
+import { HtmlElement, HtmlBodyElement, HtmlfooterElement, HtmlHeaderElement, HtmlMainElement, HtmlHElement, HtmlPElement } from "./HtmlElement";
 import TablePersonalWebsite from "./interfaces/TablePersonalWebsite";
 
 export abstract class Page {

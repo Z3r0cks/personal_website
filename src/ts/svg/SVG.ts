@@ -2,10 +2,13 @@ abstract class SVG {
    svg: SVGSVGElement;
    path: SVGPathElement;
 
-   constructor(className: string, fill: string) {
+   constructor(className: string, id: string, fill: string) {
       this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      this.svg.setAttribute("class", className);
       this.path = document.createElementNS('http://www.w3.org/2000/svg', "path");
+      this.svg.setAttribute("viewBox", "0 0 512 512");
+      this.path.setAttribute("fill", fill);
+      this.svg.setAttribute("class", className);
+      this.svg.id = id;
       this.path.setAttribute("fill", fill);
       this.svg.appendChild(this.path);
    }

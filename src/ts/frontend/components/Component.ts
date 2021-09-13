@@ -65,7 +65,7 @@ export default abstract class Component {
    }
 
    postContent() {
-      fetch("/addComponent", {
+      fetch("/addContent", {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json'

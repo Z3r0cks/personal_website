@@ -2,12 +2,15 @@ import C_title from "../frontend/components/C_title";
 import { addHtmlElement, removeElement, componentWrapper } from "../helper/helper";
 import AddSVG from "../svg/AddSvg";
 import CloseSvg from "../svg/CloseSvg";
+import BackendMenu from "./BackendMenu/BackendMenu";
+import BackendSetComponent from "./BackendMenu/BackendSetComponents";
 import loadContent from "./loadContent";
 
 
 (async function main() {
    console.log("app successfully loaded");
 
+   const test = new BackendSetComponent();
    await loadContent();
    addAddSvg();
 

@@ -18,6 +18,12 @@ export function addBackendDiv(): HTMLDivElement {
    return div
 }
 
+export function addBackendP(innerHTML: string): HTMLParagraphElement {
+   const p: HTMLParagraphElement = addHtmlElement("p", "be_p") as HTMLParagraphElement;
+   p.innerHTML = innerHTML;
+   return p;
+}
+
 export function addBackendInput(type: string, defaultValue: string | false, innerHTML?: string): HTMLInputElement {
    const input: HTMLInputElement = addHtmlElement("input", "be_input") as HTMLInputElement
    input.type = type;

@@ -110,7 +110,7 @@ pathArray.forEach(e => {
 //    }
 // })
 
-app.post("/addComponent", async (req, res) => {
+app.post("/addContent", async (req, res) => {
    const backend = new Backend();
    await backend.executeSQL("INSERT INTO `personal_website`.`content`(`DEV_NAME`,`SETTINGS`) VALUES ('" + req.body.devName + "','" + JSON.stringify(req.body.settings) + "')")
    try {
@@ -120,9 +120,29 @@ app.post("/addComponent", async (req, res) => {
    res.sendStatus(200);
 })
 
-app.post("/deleteComponent", async (req, res) => {
+app.post("/deleteContent", async (req, res) => {
    const backend = new Backend();
    await backend.executeSQL("DELETE FROM `content` WHERE `content`.`ID` = " + req.body.id)
+   try {
+   } catch (error) {
+      res.json({ err: true, msg: error });
+   }
+   res.sendStatus(200);
+})
+
+app.post("/addComponent", async (req, res) => {
+   const backend = new Backend();
+   await backend.executeSQL("INSERT INTO `personal_website`.`component`(`DEV_NAME`,`PUP_NAME`, `DESCR`) VALUES ('" + req.body.devName + "','" + req.body.pupName + "','" + req.body.descr + "')")
+   try {
+   } catch (error) {
+      res.json({ err: true, msg: error });
+   }
+   res.sendStatus(200);
+})
+
+app.post("/deleteComponent", async (req, res) => {
+   const backend = new Backend();
+   await backend.executeSQL("DELETE FROM `content` WHERE `component`.`ID` = " + req.body.id)
    try {
    } catch (error) {
       res.json({ err: true, msg: error });
@@ -137,7 +157,7 @@ function stringifySettings(req) {
    })
 }
 
-// app.post("/addComponent", async (req, res) => {
+// app.post("/addContent", async (req, res) => {
 //    const backend = new Backend();
 //    try {
 //       const response = await backend.executeSQL("UPDATE `content` SET `Text_Content` = '" + req.body.titleName + "'")

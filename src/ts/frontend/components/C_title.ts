@@ -14,5 +14,5 @@ export default class C_title extends Component {
       const type = addBackendInput("text", "h2", "Type")
       const color = addBackendInput("text", "white", "Farbe")
       this.setSetting({ content: titleInput, type: type, color: color })
-   }
+   } 
 }

@@ -24,11 +24,6 @@ function browsersyncServe(cb) {
    cb();
 }
 
-// function browsersyncReload(cb) {
-//    browserSync.reload();
-//    cb();
-// }
-
 async function serverTsc(cb) {
    src('src/server/*.ts')
       .pipe(sourceMaps.init())
