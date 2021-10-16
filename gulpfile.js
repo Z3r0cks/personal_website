@@ -1,4 +1,4 @@
-const { gulp, src, dest, watch, series } = require('gulp');
+const { src, dest, watch, series } = require('gulp');
 const compileSass = require('gulp-sass')(require('sass'));
 const minifyCSS = require('gulp-clean-css');
 const minifyJS = require('gulp-minify');

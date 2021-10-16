@@ -23,7 +23,6 @@ export class HomePage extends Page {
                ])
             ])
          ])
-
          this.main = new HtmlMainElement(content)
          this.body = new HtmlBodyElement([this.header, this.main])
       } catch (error) {

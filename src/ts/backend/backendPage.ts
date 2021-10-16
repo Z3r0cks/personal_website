@@ -10,10 +10,11 @@ import loadContent from "./loadContent";
 (async function main() {
    console.log("app successfully loaded");
 
-   const test = new BackendSetComponent();
+   //TODO: Font Mapping, eigene filetype für vscode und ts (jsx)
+
+   // new BackendSetComponent();
    await loadContent();
    addAddSvg();
-
    async function addComponentMenu() {
       const componentMenu: HTMLDivElement = addHtmlElement("div", "c_devMenu", "devMenu") as HTMLDivElement;
       const closeSvg: CloseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
@@ -53,7 +54,6 @@ import loadContent from "./loadContent";
          case "c_title":
             new C_title();
             break;
-
          default:
             break;
       }

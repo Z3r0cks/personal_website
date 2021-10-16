@@ -49,6 +49,9 @@ export abstract class Page {
             case "c_title":
                htmlList.push(new HtmlHElement("c_head", false, settings.content, false, settings.type))
                break;
+            case "c_test":
+               
+               break;
          }
       })
       return htmlList

@@ -27,3 +27,21 @@
    position: absolute;
    right: 6.2rem;
 }
+
+.svg {
+   width: 50px;
+   height: 50px;
+   color: red;
+   &::after {
+      content: url("../assets/svgs/save-regular.svg");
+      color: red;
+   }
+}
+
+.red:after {
+   &:first-child {
+      background-color: red;
+      color: red;
+      fill: red;
+   }
+}

@@ -2,112 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/ts/backend/BackendMenu/BackendMenuTab.ts":
-/*!******************************************************!*\
-  !*** ./src/ts/backend/BackendMenu/BackendMenuTab.ts ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ BackendMenuTab)
-/* harmony export */ });
-/* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helper/helper */ "./src/ts/helper/helper.ts");
-/* harmony import */ var _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../svg/CloseSvg */ "./src/ts/svg/CloseSvg.ts");
-
-
-class BackendMenuTab {
-    _name;
-    _wrapper;
-    _closeSVG;
-    constructor(name) {
-        this._closeSVG = new _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_closeSvg be_closeSvg__tabsvg", "", "#effcef");
-        this._name = name;
-        this._wrapper = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addHtmlElement)("div", "be_tabWrapper");
-        document.body.appendChild(this._wrapper);
-    }
-    createMenu(htmlElements) {
-        this._wrapper.append(this._closeSVG.svg);
-        htmlElements.forEach(e => {
-            this._wrapper.appendChild(e);
-        });
-    }
-    checkNecessaryInput(inputElements) {
-        let inputDone = true;
-        inputElements.forEach(e => {
-            if (e.value == undefined || e.value == "")
-                inputDone = false;
-        });
-        return inputDone;
-    }
-}
-
-
-/***/ }),
-
-/***/ "./src/ts/backend/BackendMenu/BackendSetComponents.ts":
-/*!************************************************************!*\
-  !*** ./src/ts/backend/BackendMenu/BackendSetComponents.ts ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ BackendSetComponent)
-/* harmony export */ });
-/* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helper/helper */ "./src/ts/helper/helper.ts");
-/* harmony import */ var _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../svg/SaveSvg */ "./src/ts/svg/SaveSvg.ts");
-/* harmony import */ var _BackendMenuTab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BackendMenuTab */ "./src/ts/backend/BackendMenu/BackendMenuTab.ts");
-
-
-
-class BackendSetComponent extends _BackendMenuTab__WEBPACK_IMPORTED_MODULE_2__.default {
-    _delteSaveSVG;
-    _addSaveSVG;
-    _descr_delete;
-    _descr_add;
-    _inputDEV_NAME;
-    _inputPUP_NAME;
-    _inputDESCR;
-    _myqlDEV_NAME;
-    _mysqlPUP_NAME;
-    _mysqlDESCR;
-    constructor() {
-        super("Components");
-        this._delteSaveSVG = new _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_saveSvg be_saveSvg__tabsvg", "", "#effcef");
-        this._addSaveSVG = new _svg_SaveSvg__WEBPACK_IMPORTED_MODULE_1__.default("be_saveSvg be_saveSvg__tabsvg", "", "#effcef");
-        this._inputDEV_NAME = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendInput)("text", "DEV_NAME");
-        this._inputPUP_NAME = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendInput)("text", "PUP_NAME");
-        this._inputDESCR = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendInput)("text", "DESCR");
-        this._descr_add = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendP)("Componente hinzufügen");
-        this._descr_delete = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_0__.addBackendP)("Component löschen");
-        this._myqlDEV_NAME = "";
-        this._mysqlPUP_NAME = "";
-        this._mysqlDESCR = "";
-        console.log("test");
-        this.createMenu([this._descr_add, this._inputDEV_NAME, this._inputPUP_NAME, this._inputDESCR, this._addSaveSVG.svg, this._descr_delete, this._delteSaveSVG.svg]);
-        this.addHandler([this._inputDEV_NAME, this._inputPUP_NAME, this._inputDESCR]);
-    }
-    addHandler(NecessaryInputElemts) {
-        this._closeSVG.svg.addEventListener("click", () => {
-            this._wrapper.remove();
-        });
-        this._addSaveSVG.svg.addEventListener("click", () => {
-            if (this.checkNecessaryInput(NecessaryInputElemts)) {
-                fetch("/ad", {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ devName: this._inputDEV_NAME.value, pupName: this._inputPUP_NAME.value, descr: this._inputDESCR.value })
-                });
-            }
-        });
-    }
-}
-
-
-/***/ }),
-
 /***/ "./src/ts/backend/loadContent.ts":
 /*!***************************************!*\
   !*** ./src/ts/backend/loadContent.ts ***!
@@ -534,9 +428,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helper_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helper/helper */ "./src/ts/helper/helper.ts");
 /* harmony import */ var _svg_AddSvg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../svg/AddSvg */ "./src/ts/svg/AddSvg.ts");
 /* harmony import */ var _svg_CloseSvg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../svg/CloseSvg */ "./src/ts/svg/CloseSvg.ts");
-/* harmony import */ var _BackendMenu_BackendSetComponents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BackendMenu/BackendSetComponents */ "./src/ts/backend/BackendMenu/BackendSetComponents.ts");
-/* harmony import */ var _loadContent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loadContent */ "./src/ts/backend/loadContent.ts");
-
+/* harmony import */ var _loadContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loadContent */ "./src/ts/backend/loadContent.ts");
 
 
 
@@ -544,8 +436,7 @@ __webpack_require__.r(__webpack_exports__);
 
 (async function main() {
     console.log("app successfully loaded");
-    const test = new _BackendMenu_BackendSetComponents__WEBPACK_IMPORTED_MODULE_4__.default();
-    await (0,_loadContent__WEBPACK_IMPORTED_MODULE_5__.default)();
+    await (0,_loadContent__WEBPACK_IMPORTED_MODULE_4__.default)();
     addAddSvg();
     async function addComponentMenu() {
         const componentMenu = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addHtmlElement)("div", "c_devMenu", "devMenu");

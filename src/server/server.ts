@@ -46,6 +46,11 @@ app.get(/assets\/fonts\/.*/i, (req, res) => {
       res.sendFile(__dirParentsName + req.path);
    } else res.sendStatus(404);
 });
+app.get(/assets\/svgs\/.*/i, (req, res) => {
+   if (fs.existsSync(__dirParentsName + req.path)) {
+      res.sendFile(__dirParentsName + req.path);
+   } else res.sendStatus(404);
+});
 
 app.get("/favicon.ico", (req, res) => {
    res.sendFile(`${__dirParentsName}/assets/favicon.ico`);
