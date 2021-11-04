@@ -9,6 +9,7 @@ export default abstract class Component {
    protected _saveSVG: SaveSvg;
    protected _settingsSVG: SettingsSvg;
    protected _devTitle: string = "";
+   protected _devClasses: string = "";
    protected _innerWrapper: HTMLDivElement;
    protected _allElements: HTMLElement[];
    protected _settings: Setting;
@@ -19,7 +20,7 @@ export default abstract class Component {
       this._settingsSVG = new SettingsSvg("be_settingsSvg", "be_settingsSvg", "#ff5454");
       this._innerWrapper = addHtmlElement("div", "be_innerCompWrapper") as HTMLDivElement;
       this._allElements = [];
-      this._settings = { color: "", content: "", width: "", type: "" }
+      this._settings = { color: "", content: "", type: "" }
       this.createOverlay();
    }
 
@@ -40,7 +41,13 @@ export default abstract class Component {
          if (this.checkNecessaryInput(ElObjects)) {
             console.log("correct");
             for (const [key, value] of Object.entries(ElObjects)) {
-               this._settings[key] = (value as HTMLInputElement).value
+               console.log(value);
+               if ((value as HTMLElement).classList[0] == "bE_form") {
+                  (value as HTMLFormElement).querySelectorAll(".bE_select").forEach(e => { this._settings[key] = (e as HTMLSelectElement).value });
+               } else if (value == "" || value == undefined)
+                  return
+               else
+                  this._settings[key] = (value as HTMLInputElement).value
             }
             this.postContent();
          }
@@ -59,7 +66,9 @@ export default abstract class Component {
    checkNecessaryInput(ElObjects: {}) {
       let inputDone: boolean = true;
       for (const [key, value] of Object.entries(ElObjects)) {
-         if ((value as HTMLInputElement).value == undefined || (value as HTMLInputElement).value == "") inputDone = false;
+         if ((value as HTMLElement).classList[0] != "bE_form") {
+            if ((value as HTMLInputElement).value == undefined || (value as HTMLInputElement).value == "") inputDone = false;
+         }
       }
       return inputDone;
    }
@@ -70,7 +79,7 @@ export default abstract class Component {
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({ devName: this._devTitle, settings: this._settings })
+         body: JSON.stringify({ devName: this._devTitle, devClasses: this._devClasses, settings: this._settings })
       }).then();
       location.reload();
    }

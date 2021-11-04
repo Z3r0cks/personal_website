@@ -61,12 +61,13 @@ class C_title extends _Component__WEBPACK_IMPORTED_MODULE_0__.default {
     constructor() {
         super();
         this._devTitle = "c_title";
+        this._devClasses = "c_title";
     }
     createBackendHtmlElemnts() {
         const titleInput = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addBackendInput)("text", false);
-        const type = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addBackendInput)("text", "h2", "Type");
+        const type = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addDropdownClick)(["h1", "h2", "h3", "h4", "h5", "h6", "h7"], "Größe");
         const color = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_1__.addBackendInput)("text", "white", "Farbe");
-        this.setSetting({ content: titleInput, type: type, color: color });
+        this.setSetting({ content: titleInput, color: color, type: type });
     }
 }
 
@@ -96,6 +97,7 @@ class Component {
     _saveSVG;
     _settingsSVG;
     _devTitle = "";
+    _devClasses = "";
     _innerWrapper;
     _allElements;
     _settings;
@@ -106,7 +108,7 @@ class Component {
         this._settingsSVG = new _svg_SettingsSVG__WEBPACK_IMPORTED_MODULE_2__.default("be_settingsSvg", "be_settingsSvg", "#ff5454");
         this._innerWrapper = (0,_helper_helper__WEBPACK_IMPORTED_MODULE_3__.addHtmlElement)("div", "be_innerCompWrapper");
         this._allElements = [];
-        this._settings = { color: "", content: "", width: "", type: "" };
+        this._settings = { color: "", content: "", type: "" };
         this.createOverlay();
     }
     createOverlay() {
@@ -124,7 +126,14 @@ class Component {
             if (this.checkNecessaryInput(ElObjects)) {
                 console.log("correct");
                 for (const [key, value] of Object.entries(ElObjects)) {
-                    this._settings[key] = value.value;
+                    console.log(value);
+                    if (value.classList[0] == "bE_form") {
+                        value.querySelectorAll(".bE_select").forEach(e => { this._settings[key] = e.value; });
+                    }
+                    else if (value == "" || value == undefined)
+                        return;
+                    else
+                        this._settings[key] = value.value;
                 }
                 this.postContent();
             }
@@ -141,8 +150,10 @@ class Component {
     checkNecessaryInput(ElObjects) {
         let inputDone = true;
         for (const [key, value] of Object.entries(ElObjects)) {
-            if (value.value == undefined || value.value == "")
-                inputDone = false;
+            if (value.classList[0] != "bE_form") {
+                if (value.value == undefined || value.value == "")
+                    inputDone = false;
+            }
         }
         return inputDone;
     }
@@ -152,7 +163,7 @@ class Component {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ devName: this._devTitle, settings: this._settings })
+            body: JSON.stringify({ devName: this._devTitle, devClasses: this._devClasses, settings: this._settings })
         }).then();
         location.reload();
     }
@@ -175,7 +186,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addBackendDiv": () => (/* binding */ addBackendDiv),
 /* harmony export */   "addBackendP": () => (/* binding */ addBackendP),
 /* harmony export */   "addBackendInput": () => (/* binding */ addBackendInput),
-/* harmony export */   "addErrorElement": () => (/* binding */ addErrorElement)
+/* harmony export */   "addErrorElement": () => (/* binding */ addErrorElement),
+/* harmony export */   "addFormElement": () => (/* binding */ addFormElement),
+/* harmony export */   "addSelectElement": () => (/* binding */ addSelectElement),
+/* harmony export */   "addLabelElement": () => (/* binding */ addLabelElement),
+/* harmony export */   "addBackendBtn": () => (/* binding */ addBackendBtn),
+/* harmony export */   "addDropdownClick": () => (/* binding */ addDropdownClick)
 /* harmony export */ });
 const componentWrapper = document.getElementById("componentWrapper");
 function removeElement(elementID) {
@@ -190,16 +206,16 @@ function addHtmlElement(htmlTag, className, idName) {
     return newElement;
 }
 function addBackendDiv() {
-    const div = addHtmlElement("div", "be_div");
+    const div = addHtmlElement("div", "bE_div");
     return div;
 }
 function addBackendP(innerHTML) {
-    const p = addHtmlElement("p", "be_p");
+    const p = addHtmlElement("p", "bE_p");
     p.innerHTML = innerHTML;
     return p;
 }
 function addBackendInput(type, defaultValue, innerHTML) {
-    const input = addHtmlElement("input", "be_input");
+    const input = addHtmlElement("input", "bE_input");
     input.type = type;
     if (defaultValue)
         input.value = defaultValue;
@@ -208,10 +224,43 @@ function addBackendInput(type, defaultValue, innerHTML) {
     return input;
 }
 function addErrorElement() {
-    const ErrorEl = addHtmlElement("P", "be_errEl");
-    ErrorEl.innerHTML = "Inhalt Fehlt";
-    ErrorEl.id = "titleError";
-    return ErrorEl;
+    const el = addHtmlElement("P", "bE_errEl");
+    el.innerHTML = "Inhalt Fehlt";
+    el.id = "titleError";
+    return el;
+}
+function addFormElement(action) {
+    const el = addHtmlElement("form", "bE_form");
+    el.action = action;
+    return el;
+}
+function addSelectElement(name, id) {
+    const el = addHtmlElement("select", "bE_select", id);
+    el.name = name;
+    return el;
+}
+function addLabelElement(labelText, forForm) {
+    const el = addHtmlElement("label", "bE_label");
+    el.innerText = labelText;
+    if (forForm)
+        el.setAttribute("for", forForm);
+    return el;
+}
+function addBackendBtn() {
+    return addHtmlElement("button", "bE_btn");
+}
+function addDropdownClick(elements, labelText, formFor) {
+    const form = addFormElement("#");
+    const label = addLabelElement(labelText, formFor);
+    const select = addSelectElement("größe", labelText);
+    elements.forEach(e => {
+        const el = addHtmlElement("option", "bE_option");
+        el.value = e;
+        el.innerText = e;
+        select.appendChild(el);
+    });
+    form.append(label, select);
+    return form;
 }
 
 

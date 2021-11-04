@@ -137,7 +137,7 @@ app.post("/deleteContent", async (req, res) => {
 
 app.post("/addComponent", async (req, res) => {
    const backend = new Backend();
-   await backend.executeSQL("INSERT INTO `personal_website`.`component`(`DEV_NAME`,`PUP_NAME`, `DESCR`) VALUES ('" + req.body.devName + "','" + req.body.pupName + "','" + req.body.descr + "')")
+   await backend.executeSQL("INSERT INTO `personal_website`.`component`(`DEV_NAME`,`PUP_NAME`,`PUP_NAME`,`DESCR`) VALUES ('" + req.body.devName + "','" + req.body.pupName + "','" + "','" + req.body.devClasses + "','" + + req.body.descr + "')")
    try {
    } catch (error) {
       res.json({ err: true, msg: error });
