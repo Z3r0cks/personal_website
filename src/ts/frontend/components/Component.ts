@@ -4,7 +4,7 @@ import CloseSvg from '../../svg/CloseSvg';
 import SettingsSvg from '../../svg/SettingsSVG';
 import { addErrorElement, addHtmlElement, componentWrapper, removeElement } from '../../helper/helper';
 
-export default abstract class Component {
+export default abstract class ansniComponent {
    protected _coseSvg: CloseSvg;
    protected _saveSVG: SaveSvg;
    protected _settingsSVG: SettingsSvg;
@@ -20,7 +20,7 @@ export default abstract class Component {
       this._settingsSVG = new SettingsSvg("be_settingsSvg", "be_settingsSvg", "#ff5454");
       this._innerWrapper = addHtmlElement("div", "be_innerCompWrapper") as HTMLDivElement;
       this._allElements = [];
-      this._settings = { color: "", content: "", type: "" }
+      this._settings = { color: "", content: "", type: "", classes: "" }
       this.createOverlay();
    }
 
@@ -65,6 +65,7 @@ export default abstract class Component {
 
    checkNecessaryInput(ElObjects: {}) {
       let inputDone: boolean = true;
+      console.log(ElObjects);
       for (const [key, value] of Object.entries(ElObjects)) {
          if ((value as HTMLElement).classList[0] != "bE_form") {
             if ((value as HTMLInputElement).value == undefined || (value as HTMLInputElement).value == "") inputDone = false;
