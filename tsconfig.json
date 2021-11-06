@@ -8,6 +8,16 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "removeComments": true,
+    "moduleResolution": "Node",
+    "plugins": [
+      {
+        "name": "typescript-lit-html-plugin",
+        "tags": [
+          "html",
+          "template"
+        ]
+      }
+    ]
   },
   "exclude": [
     "src/server",

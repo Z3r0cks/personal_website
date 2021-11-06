@@ -26,7 +26,6 @@ function browsersyncServe(cb) {
 
 async function serverTsc(cb) {
    src('src/server/*.ts')
-      .pipe(sourceMaps.init())
       .pipe(ts({
          module: 'commonjs',
          target: 'es6',
@@ -51,7 +50,6 @@ function webpackGulp() {
             main: './src/ts/frontend/app.ts'
          },
          mode: 'development',
-         devtool: false,
          module: {
             rules: [
                {
@@ -62,7 +60,7 @@ function webpackGulp() {
             ]
          },
          resolve: {
-            extensions: ['.ts', '.js']
+            extensions: [".js", ".json", ".ts"],
          },
          output: {
             publicPath: 'dist',
@@ -86,17 +84,17 @@ async function bundleSass() {
 }
 
 function watchTask(cb) {
-   watch('./src/scss/**/*.scss', bundleSass);
    watch('./src/server/*.ts', serverTsc);
+   watch('./src/scss/**/*.scss', bundleSass);
    watch('./src/ts/**/*.ts', webpackGulp);
    // watch('src/ts/backend/*.ts', browsersyncReload);
    cb();
 };
 
 exports.default = series(
-   nodemonStart,
    browsersyncServe,
-   watchTask
+   watchTask,
+   nodemonStart,
 );
 
 

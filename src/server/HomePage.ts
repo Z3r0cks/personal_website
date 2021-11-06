@@ -13,13 +13,13 @@ export class HomePage extends Page {
       try {
          this.html = new Html("de", "./css/style.css", "Mein Title", ["./js/main.js"]);
 
-         this.header = new HtmlHeaderElement(false, false, false, [
-            new HtmlNavElement("navbar", false, false, [
-               new HtmlHElement("navTitle", false, "Patrick Kaserer", false, "h1"),
-               new HtmlDivElement(false, false, false, [
-                  new HtmlButtonElement("btn btn--second", false, "über mich", false),
-                  new HtmlButtonElement("btn btn--second", false, "Referenzen", false),
-                  new HtmlButtonElement("btn btn--main", false, "Kontakt", false),
+         this.header = new HtmlHeaderElement(false, false, [
+            new HtmlNavElement("class='navbar'", false, [
+               new HtmlHElement("class='navTitle'", "Patrick Kaserer", "h1"),
+               new HtmlDivElement(false, false, [
+                  new HtmlButtonElement("class='btn btn--second'", "über mich"),
+                  new HtmlButtonElement("class='btn btn--second'", "Referenzen"),
+                  new HtmlButtonElement("class='btn btn--main'", "Kontakt"),
                ])
             ])
          ])
@@ -28,7 +28,7 @@ export class HomePage extends Page {
       } catch (error) {
          this.html = new Html("de", "./css/style.css", "ERROR", ["./js/main.js"]);
          this.body = new HtmlBodyElement([
-            new HtmlPElement("main", "main", "Test", false)
+            new HtmlPElement("class='main' id='main'", "Test")
          ])
       }
    }

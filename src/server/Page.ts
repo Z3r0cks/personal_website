@@ -36,8 +36,8 @@ export abstract class Page {
          })
       })
    }
-   async buildPage() {
 
+   async buildPage() {
    };
 
    protected async getContent(): Promise<HtmlElement[]> {
@@ -47,8 +47,7 @@ export abstract class Page {
          const settings = JSON.parse(e.SETTINGS);
          switch (e.DEV_NAME) {
             case "c_title":
-               console.log(settings.type);
-               htmlList.push(new HtmlHElement("c_head", false, settings.content, false, settings.type))
+               htmlList.push(new HtmlHElement("class='c_head' id='c_head'", settings.content, settings.type))
                break;
             case "c_test":
 

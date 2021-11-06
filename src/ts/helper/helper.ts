@@ -1,5 +1,3 @@
-import e from "express";
-
 export const componentWrapper: HTMLDivElement = document.getElementById("componentWrapper") as HTMLDivElement;
 
 export function removeElement(elementID: string) {
@@ -13,7 +11,7 @@ export function addHtmlElement(htmlTag: string, className: string | false, idNam
    return newElement;
 }
 
-// BACKEND COMPONENTS
+// BACKEND ELEMENTS
 
 export function addBackendDiv(): HTMLDivElement {
    const div: HTMLDivElement = addHtmlElement("div", "bE_div") as HTMLDivElement
@@ -65,7 +63,7 @@ export function addBackendBtn(): HTMLButtonElement {
    return addHtmlElement("button", "bE_btn") as HTMLButtonElement;
 }
 
-export function addDropdownClick(elements: string[], labelText: string, formFor?: string): HTMLFormElement {
+export function addBackendDropdownClick(elements: string[], labelText: string, formFor?: string): HTMLFormElement {
    const form = addFormElement("#");
    const label = addLabelElement(labelText, formFor);
    const select = addSelectElement("größe", labelText);
