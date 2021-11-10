@@ -27,8 +27,8 @@ export default class C_title extends Component {
    createDOMELements() {
       const domBuild = html`
          <div class="container">
-            <h1>
-               <span></span>
+            <h1 class="testClass">
+               <span apfelmus="apfelmus" id="testId"></span>
             </h1>
             <h2>test
                <div>
@@ -59,17 +59,28 @@ export default class C_title extends Component {
    }
 
    loopDOM(el: HTMLElement, dimension: number) {
-      let obJ;
+      let attr: Attr[] = [];
       for (let i = 0; el.children[i]; i++) {
-         if (el.children[i].childNodes[0]) {
-            let test = el.children[i].childNodes[0].textContent.replace(/\s/g, '');
+         if (Object.entries(el.children[i].attributes).length > 0) {
+            console.log(Object.entries(el.children[i].attributes).length);
+            for (const [key, value] of Object.entries(el.children[i].attributes)) {
+               attr.push(value)
+               console.log(attr);
+            }
+         }
+         // console.log(el.children[i].tagName, dimension);;
+         if (el.children[i].childNodes[0] && el.children[i].childNodes[0].textContent) {
+            let test = (el.children[i].childNodes[0].textContent as string).replace(/\s/g, '');
             if (test.slice(0, 2) == "$$") {
-               console.log(test);
+               // console.log(test);
             }
          }
          if (el.children[i].firstElementChild) {
             this.loopDOM(el.children[i] as HTMLElement, (dimension + 1));
          }
+      }
+      if (dimension == 0) {
+         // console.log(this._elements);
       }
    }
 }
