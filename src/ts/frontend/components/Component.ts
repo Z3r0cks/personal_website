@@ -4,9 +4,10 @@ import CloseSvg from '../../svg/CloseSvg';
 import SettingsSvg from '../../svg/SettingsSVG';
 import { addErrorElement, addHtmlElement, componentWrapper, removeElement } from '../../helper/helper';
 import { html } from 'lit-html';
-// interface keyObject {
-//    [key: string]: HTMLElement
-// }
+interface ElementObj {
+   [key: string]: [string, string?, ElementObj?]
+};
+
 export default abstract class ansniComponent {
    protected _coseSvg: CloseSvg;
    protected _saveSVG: SaveSvg;
@@ -15,10 +16,12 @@ export default abstract class ansniComponent {
    protected _innerWrapper: HTMLDivElement;
    protected _allElements: HTMLElement[];
    protected _settings: Setting;
-   protected __keyWords: {};
+   protected _keyWords: {};
+   protected _elements: ElementObj;
 
    constructor() {
-      this.__keyWords = {};
+      this._keyWords = {};
+      this._elements = {};
       this._coseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
       this._saveSVG = new SaveSvg("be_saveSvg", "be_saveSvg", "#ff5454");;
       this._settingsSVG = new SettingsSvg("be_settingsSvg", "be_settingsSvg", "#ff5454");
@@ -37,7 +40,7 @@ export default abstract class ansniComponent {
    createBackendHtmlElements() { }
 
    setContentKeys(obj: {}) {
-      this.__keyWords = { obj }
+      this._keyWords = { obj }
    }
 
    setSetting(ElObjects: {}) {
