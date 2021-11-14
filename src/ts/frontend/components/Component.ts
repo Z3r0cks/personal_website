@@ -4,8 +4,13 @@ import CloseSvg from '../../svg/CloseSvg';
 import SettingsSvg from '../../svg/SettingsSVG';
 import { addErrorElement, addHtmlElement, componentWrapper, removeElement } from '../../helper/helper';
 import { html } from 'lit-html';
-interface ElementObj {
-   [key: string]: [string, string?, ElementObj?]
+export interface ElementObj {
+   tagName: string,
+   attr: {},
+   childrens: ElementObj[]
+};
+export interface attrtObj {
+   [key: string]: string;
 };
 
 export default abstract class ansniComponent {
@@ -21,7 +26,7 @@ export default abstract class ansniComponent {
 
    constructor() {
       this._keyWords = {};
-      this._elements = {};
+      this._elements = { tagName: "", attr: {}, childrens: [] };
       this._coseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
       this._saveSVG = new SaveSvg("be_saveSvg", "be_saveSvg", "#ff5454");;
       this._settingsSVG = new SettingsSvg("be_settingsSvg", "be_settingsSvg", "#ff5454");

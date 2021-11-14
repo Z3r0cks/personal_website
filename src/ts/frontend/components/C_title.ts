@@ -1,4 +1,5 @@
 import Component from './Component'
+import { attrtObj, ElementObj } from './Component'
 import { addBackendInput, addBackendDropdownClick } from "../../helper/helper";
 import { html } from 'lit-html'
 
@@ -26,25 +27,15 @@ export default class C_title extends Component {
 
    createDOMELements() {
       const domBuild = html`
-         <div class="container">
-            <h1 class="testClass">
-               <span apfelmus="apfelmus" id="testId"></span>
-            </h1>
-            <h2>test
-               <div>
-                  <span>
-                     <a> $$content </a>
-                  </span>
+         <div class="1">
+            <div class="2">
+               <div class="3"></div>
+            </div>
+            <div class="a">
+               <div class="b">
+                  <div class="c  "></div>
                </div>
-            </h2>
-            <h3>
-               <div>$$content
-                  <span>
-                     <a> </a>
-                  </span>
-               </div>
-            </h3>
-         </div>
+            </div>
       `
 
       this.parseDOM(domBuild)
@@ -55,32 +46,43 @@ export default class C_title extends Component {
       const document = parser.parseFromString(domBuild.strings[0], 'text/html');
 
       console.log(document.body);
-      this.loopDOM(document.body, 0)
+      console.log(this.loopDOM(document.body));
    }
 
-   loopDOM(el: HTMLElement, dimension: number) {
-      let attr: Attr[] = [];
-      for (let i = 0; el.children[i]; i++) {
+   loopDOM(el: HTMLElement, dimension: number = 0) {
+      let attr = {};
+      const elCh = el.children;
+      let testElement: ElementObj = { tagName: "", attr: {}, childrens: [] };
+      for (let i = 0; elCh[i] || i == 0; i++) {
          if (Object.entries(el.children[i].attributes).length > 0) {
-            console.log(Object.entries(el.children[i].attributes).length);
             for (const [key, value] of Object.entries(el.children[i].attributes)) {
-               attr.push(value)
-               console.log(attr);
+               attr[value.name] = value.nodeValue;
             }
          }
-         // console.log(el.children[i].tagName, dimension);;
-         if (el.children[i].childNodes[0] && el.children[i].childNodes[0].textContent) {
-            let test = (el.children[i].childNodes[0].textContent as string).replace(/\s/g, '');
-            if (test.slice(0, 2) == "$$") {
-               // console.log(test);
-            }
-         }
+         // if (el.children[i].childNodes[0] &&elCh[i].childNodes[0].textContent) {
+         //    let test = (el.children[i].childNodes[0].textContent as string).replace(/\s/g, '');
+         //    if (test.slice(0, 2) == "$$") {
+         //    }
+         // }
          if (el.children[i].firstElementChild) {
-            this.loopDOM(el.children[i] as HTMLElement, (dimension + 1));
+            testElement = { tagName: elCh[i].tagName, attr: attr, childrens: [] }
+            testElement.childrens.push(this.loopDOM(el.children[i] as HTMLElement, (dimension + 1)) as ElementObj)
+         } else {
+            testElement = { tagName: elCh[i].tagName, attr: attr, childrens: [] }
          }
-      }
-      if (dimension == 0) {
-         // console.log(this._elements);
+         if (elCh[i].nextElementSibling) {
+            testElement
+         }
+         return testElement
       }
    }
+
+   // wrapper(el: HTMLElement) {
+   //    let testObJ;
+   //    testObJ = this.loopDOM(el, 0);
+   //    if (el.nextElementSibling) {
+   //       testObJ = this.loopDOM(el.nextElementSibling as HTMLElement, 0);
+   //    }
+   //    return testObJ;
+   // }
 }
