@@ -1,7 +1,7 @@
-Scripts:
+Small CMS for Developer, Work in Progress.
 
-npm run start         start nodemon server
-npm run serve         webpack-dev-server
-npm run build         webpack build
-npm run build:watch   webpack build in watchmode for Fronend and Frondend-backend
-gulp.cmd              starting gulp for server and scss  <-- use this
+Useds: Typescript, Node.js with Expressiv (CRUD), SCSS
+Compiled with gulp and Webpack
+
+Scripts:
+gulp.cmd              starting gulp for server and scss
