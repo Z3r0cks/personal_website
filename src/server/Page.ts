@@ -45,6 +45,7 @@ export abstract class Page {
       const htmlList: HtmlElement[] = [];
       response.forEach(e => {
          const settings = JSON.parse(e.SETTINGS);
+         console.log(settings.type);
          switch (e.DEV_NAME) {
             case "c_title":
                htmlList.push(new HtmlHElement("class='c_head' id='c_head'", settings.content, settings.type))

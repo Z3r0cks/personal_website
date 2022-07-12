@@ -19,7 +19,6 @@ export default class BackendMenu {
    }
 
    createMenu() {
-      console.log("test");
       this._menuContent.forEach(e => {
          document.createElement("a")
          const newlink: HTMLAnchorElement = addHtmlElement("a", "be_componentMenu__a") as HTMLAnchorElement;

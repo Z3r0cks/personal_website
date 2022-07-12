@@ -8,7 +8,9 @@
     "build:watch": "webpack --watch",
     "build": "webpack",
     "start": "nodemon dist/server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "drop": "node -e \"require('./dist/server/DataBase.js').dropDatabase()\"",
+    "migrate": "node -e \"require('./dist/server/DataBase.js').migrateDataBase()\""
   },
   "author": "Jacroch, Alexander; Kaserer, Patrick",
   "license": "ISC",

@@ -27,7 +27,6 @@ export default class BackendSetComponent extends BackendMenuTab {
       this._mysqlPUP_NAME = "";
       this._mysqlDESCR = "";
       // Mind The Order
-      console.log("test");
       this.createMenu([this._descr_add, this._inputDEV_NAME, this._inputPUP_NAME, this._inputDESCR, this._addSaveSVG.svg, this._descr_delete, this._delteSaveSVG.svg]);
 
       // put NecessaryInputElemts

@@ -50,6 +50,7 @@ class Page {
             const htmlList = [];
             response.forEach(e => {
                 const settings = JSON.parse(e.SETTINGS);
+                console.log(settings.type);
                 switch (e.DEV_NAME) {
                     case "c_title":
                         htmlList.push(new HtmlElement_1.HtmlHElement("class='c_head' id='c_head'", settings.content, settings.type));
