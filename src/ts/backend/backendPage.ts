@@ -6,10 +6,7 @@ import loadContent from "./loadContent";
 
 
 (async function main() {
-   console.log("app successfully loaded");
-
-   //TODO: Font Mapping, eigene filetype für vscode und ts (jsx)
-
+   console.log("app successfully loaded")
    // new BackendSetComponent();
    await loadContent();
    addAddSvg();
@@ -21,9 +18,9 @@ import loadContent from "./loadContent";
          addAddSvg();
       })
 
-      let response = await fetch('/selectComponents')
+      let response = await fetch('/selectContent')
       let data = await response.json()
-
+      
       data.forEach(e => {
          const cBtn: HTMLButtonElement = addHtmlElement("button", "btn btn--devBtn", "devBtn") as HTMLButtonElement;
          cBtn.innerHTML = e.PUP_NAME;

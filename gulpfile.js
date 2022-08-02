@@ -9,6 +9,7 @@ const browserSync = require('browser-sync').create();
 const webpack = require('webpack-stream');
 compileSass.compiler = require('node-sass');
 const path = require('path');
+const glob = require('glob');
 
 async function nodemonStart() {
    nodemon({ script: "dist/server/server.js", delay: 25 })
@@ -42,13 +43,29 @@ async function serverTsc(cb) {
    cb();
 }
 
+
+function getEntries(pattern) {
+   const entries = {};
+   glob.sync(pattern).forEach((file) => {
+      const outputFileKey = path.basename(file);
+      entries[outputFileKey] = path.join(__dirname, file);
+   });
+   return entries;
+}
+
+function getEntries(pattern) {
+   const entries = {};
+   glob.sync(pattern).forEach((file) => {
+      const outputFileKey = path.basename(file.slice(0, -3));
+      entries[outputFileKey] = path.join(__dirname, file);
+   });
+   return entries;
+}
+
 function webpackGulp() {
    return src('./src/ts/backend/backendPage.ts')
       .pipe(webpack({
-         entry: {
-            backendPage: './src/ts/backend/backendPage.ts',
-            main: './src/ts/frontend/app.ts'
-         },
+         entry: getEntries('./src/ts/*/*.ts'),
          mode: 'development',
          module: {
             rules: [
@@ -92,9 +109,11 @@ function watchTask(cb) {
 };
 
 exports.default = series(
+   serverTsc,
+   webpackGulp,
    browsersyncServe,
    watchTask,
-   nodemonStart,
+   nodemonStart
 );
 
 
@@ -111,7 +130,6 @@ exports.default = series(
 // };
 // // watch('src/server/*.ts', () => {
 // //    tsc('src/server/*.ts', './dist/server/', 'server.js')
-// //    console.log("test");
 // // });;
 
 // const webpackGulp = () => {

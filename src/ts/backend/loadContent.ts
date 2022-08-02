@@ -9,8 +9,7 @@ export default async function loadContent() {
       const innerWrapper: HTMLDivElement = addHtmlElement("div", "be_innerWrapper") as HTMLDivElement
       const trashSvg: TrashSvg = new TrashSvg("be_trashSvg", "be_contentTrash", "#ff5454");
       const el: HTMLDivElement = addHtmlElement("div", false) as HTMLDivElement
-      trashSvg.svg.addEventListener("click", () => { trashHandler(e.ID); innerWrapper.remove() })
-
+      trashSvg.svg.addEventListener("click", () => { trashHandler(e.ID); innerWrapper.remove();     })
       el.innerHTML = (e.DEV_NAME);
       innerWrapper.append(el, trashSvg.svg)
       componentWrapper.append(innerWrapper);
