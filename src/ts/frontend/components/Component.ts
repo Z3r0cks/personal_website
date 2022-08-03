@@ -13,16 +13,18 @@ export interface attrtObj {
    [key: string]: string;
 };
 
-export default abstract class ansniComponent {
+export default abstract class Component {
    protected _coseSvg: CloseSvg;
    protected _saveSVG: SaveSvg;
    protected _settingsSVG: SettingsSvg;
    protected _devTitle: string = "";
+   protected _pupTitle: string = "";
    protected _innerWrapper: HTMLDivElement;
    protected _allElements: HTMLElement[];
    protected _settings: Setting;
    protected _keyWords: {};
    protected _elements: ElementObj;
+   protected _descr: String = "";
 
    constructor() {
       this._keyWords = {};
@@ -55,9 +57,7 @@ export default abstract class ansniComponent {
       componentWrapper.append(this._innerWrapper);
       this._saveSVG.svg.addEventListener("click", () => {
          if (this.checkNecessaryInput(ElObjects)) {
-            console.log("correct");
             for (const [key, value] of Object.entries(ElObjects)) {
-               console.log(value);
                if ((value as HTMLElement).classList[0] == "bE_form") {
                   (value as HTMLFormElement).querySelectorAll(".bE_select").forEach(e => { this._settings[key] = (e as HTMLSelectElement).value });
                } else if (value == "" || value == undefined)
@@ -71,7 +71,6 @@ export default abstract class ansniComponent {
             if (document.getElementById("titleError")) {
                removeElement("titleError");
             }
-            console.log("Not correct");
             const errorP = addErrorElement();
             this._innerWrapper.appendChild(errorP);
          }
@@ -81,7 +80,6 @@ export default abstract class ansniComponent {
 
    checkNecessaryInput(ElObjects: {}) {
       let inputDone: boolean = true;
-      console.log(ElObjects);
       for (const [key, value] of Object.entries(ElObjects)) {
          if ((value as HTMLElement).classList[0] != "bE_form") {
             if ((value as HTMLInputElement).value == undefined || (value as HTMLInputElement).value == "") inputDone = false;
@@ -90,13 +88,34 @@ export default abstract class ansniComponent {
       return inputDone;
    }
 
+   //INSERT INTO `personal_website`.`component`(`DEV_NAME`,`PUP_NAME`,`DESCR`) VALUES (
+
+   postComponent() {
+      fetch("/addComponent", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({ DEV_NAME: this._devTitle, PUP_NAME: this._pupTitle, DESCR: this._descr })
+      }).then(res => res.json())
+         .then(res => {
+            if (res.success) {
+               console.log(res.message);
+            }
+            else {
+               console.log(res.message);
+            }
+         }).catch(err => {
+            console.log(err);
+         })
+   }
+
+
    postContent() {
       fetch("/addContent", {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({ devName: this._devTitle, settings: this._settings })
+         body: JSON.stringify({ DEV_NAME: this._devTitle, SETTINGS: this._settings })
       }).then();
       location.reload();
    }

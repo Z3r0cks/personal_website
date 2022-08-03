@@ -8,6 +8,8 @@ export default class C_title extends Component {
    constructor() {
       super()
       this._devTitle = "c_title";
+      this._pupTitle = "Titel";
+      this._descr = "A Title Component";
    }
 
    createBackendHtmlElements() {
@@ -31,11 +33,12 @@ export default class C_title extends Component {
             <div class="2">
                <div class="3"></div>
             </div>
-            <div class="a">
-               <div class="b">
-                  <div class="c  "></div>
-               </div>
+         </div>
+         <div class="a">
+            <div class="b">
+               <div class="c"></div>
             </div>
+         </div>
       `
 
       this.parseDOM(domBuild)
@@ -44,9 +47,7 @@ export default class C_title extends Component {
    parseDOM(domBuild) {
       const parser = new DOMParser();
       const document = parser.parseFromString(domBuild.strings[0], 'text/html');
-
-      console.log(document.body);
-      console.log(this.loopDOM(document.body));
+      console.log(document);
    }
 
    loopDOM(el: HTMLElement, dimension: number = 0) {

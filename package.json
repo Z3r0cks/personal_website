@@ -10,7 +10,9 @@
     "start": "nodemon dist/server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "drop": "node -e \"require('./dist/server/DataBase.js').dropDatabase()\"",
-    "migrate": "node -e \"require('./dist/server/DataBase.js').migrateDataBase()\""
+    "migrate": "node -e \"require('./dist/server/DataBase.js').migrateDataBase()\"",
+    "createComponent": "node -e \"require('./dist/server/CreateComponent.js').createComponent()\"",
+    "migrateComponents": "node -e \"require('./dist/server/MigrateComponent.js').migrateComponents()\""
   },
   "author": "Jacroch, Alexander; Kaserer, Patrick",
   "license": "ISC",

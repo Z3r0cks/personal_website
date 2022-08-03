@@ -133,7 +133,7 @@ app.post("/deleteContent", (req, res) => __awaiter(void 0, void 0, void 0, funct
 }));
 app.post("/addComponent", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const backend = new Backend_1.Backend();
-    yield backend.executeSQL("INSERT INTO `personal_website`.`component`(`DEV_NAME`,`PUP_NAME`,`PUP_NAME`,`DESCR`) VALUES ('" + req.body.devName + "','" + req.body.pupName + "','" + "','" + req.body.devClasses + "','" + +req.body.descr + "')");
+    yield backend.executeSQL("INSERT INTO `personal_website`.`component`(`DEV_NAME`,`PUP_NAME`,`DESCR`) VALUES ('" + req.body.devName + "','" + req.body.pupName + "','" + "','" + req.body.devClasses + "','" + +req.body.descr + "')");
     try {
     }
     catch (error) {
