@@ -7,6 +7,10 @@
 @import "./fonts";
 @import "./spaces";
 @import "./utilitys";
+@import "./navbar";
+@import "./main";
+@import "./button";
+@import "./svgs";
 
 // normalizer
 @import "./normalizer";
@@ -16,10 +20,6 @@
 
 // components
 @import ".components/c_title";
-@import "./navbar";
-@import "./main";
-@import "./button";
-@import "./svgs";
 
 // dev
 @import "./devSizeBtn";

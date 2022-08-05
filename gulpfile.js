@@ -26,7 +26,7 @@ function browsersyncServe(cb) {
 }
 
 async function serverTsc(cb) {
-   src('src/server/*.ts')
+   src('src/server/**/*.ts')
       .pipe(ts({
          module: 'commonjs',
          target: 'es6',
@@ -43,14 +43,22 @@ async function serverTsc(cb) {
    cb();
 }
 
-
-function getEntries(pattern) {
-   const entries = {};
-   glob.sync(pattern).forEach((file) => {
-      const outputFileKey = path.basename(file);
-      entries[outputFileKey] = path.join(__dirname, file);
-   });
-   return entries;
+async function tsc(cb) {
+   src('src/ts/**/*.ts')
+      .pipe(ts({
+         module: 'commonjs',
+         target: 'es6',
+         lib: ['es6', 'dom'],
+         noImplicitAny: false,
+         moduleResolution: 'node',
+         esModuleInterop: true
+      }))
+      .pipe(sourceMaps.write())
+      // TODO: set noSource to true
+      // .pipe(minifyJS({ noSource: false }))
+      .pipe(dest('./dist/js/'))
+      .pipe(browserSync.stream());
+   cb();
 }
 
 function getEntries(pattern) {
@@ -60,34 +68,6 @@ function getEntries(pattern) {
       entries[outputFileKey] = path.join(__dirname, file);
    });
    return entries;
-}
-
-function webpackGulp() {
-   return src('./src/ts/backend/backendPage.ts')
-      .pipe(webpack({
-         entry: getEntries('./src/ts/*/*.ts'),
-         mode: 'development',
-         module: {
-            rules: [
-               {
-                  test: /\.ts$/,
-                  use: 'ts-loader',
-                  include: [path.resolve(__dirname, 'src/ts/')]
-               }
-            ]
-         },
-         resolve: {
-            extensions: [".js", ".json", ".ts"],
-         },
-         output: {
-            publicPath: 'dist',
-            filename: '[name].js',
-            path: path.resolve(__dirname, 'dist/js/')
-         },
-      }
-      ))
-      .pipe(dest('./dist/js'))
-      .pipe(browserSync.stream());
 }
 
 async function bundleSass() {
@@ -103,14 +83,14 @@ async function bundleSass() {
 function watchTask(cb) {
    watch('./src/server/*.ts', serverTsc);
    watch('./src/scss/**/*.scss', bundleSass);
-   watch('./src/ts/**/*.ts', webpackGulp);
+   watch('./src/ts/**/*.ts', tsc);
    // watch('src/ts/backend/*.ts', browsersyncReload);
    cb();
 };
 
 exports.default = series(
    serverTsc,
-   webpackGulp,
+   tsc,
    browsersyncServe,
    watchTask,
    nodemonStart
