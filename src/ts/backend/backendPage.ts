@@ -3,7 +3,7 @@ import { addHtmlElement, removeElement, componentWrapper } from "../helper/helpe
 import AddSVG from "../svg/AddSvg";
 import CloseSvg from "../svg/CloseSvg";
 import loadContent from "./loadContent";
-
+console.log("app successfully loaded");
 
 (async function main() {
    console.log("app successfully loaded")
@@ -12,6 +12,7 @@ import loadContent from "./loadContent";
    addAddSvg();
    async function addComponentMenu() {
       const componentMenu: HTMLDivElement = addHtmlElement("div", "c_devMenu", "devMenu") as HTMLDivElement;
+      console.log(componentMenu);
       const closeSvg: CloseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
       closeSvg.svg.addEventListener("click", () => {
          componentMenu.remove();

@@ -5,6 +5,7 @@ export default async function loadContent() {
    let response = await fetch('/selectContent')
    let data = await response.json()
 
+   console.log(data);
    data.forEach(e => {
       const innerWrapper: HTMLDivElement = addHtmlElement("div", "be_innerWrapper") as HTMLDivElement
       const trashSvg: TrashSvg = new TrashSvg("be_trashSvg", "be_contentTrash", "#ff5454");

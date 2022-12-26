@@ -29,16 +29,52 @@ app.get("/backend", (req, res) => {
    res.sendFile(`${__dirParentsName}/backend.html`)
 });
 
-app.get("/js/main.js", (req, res) => {
-   res.sendFile(`${__dirParentsName}/js/main.js`)
-});
+// app.get("/js/main.js", (req, res) => {
+//    res.sendFile(`${__dirParentsName}/js/main.js`)
+// });
 
 app.get("/js/backendPage.js", (req, res) => {
    res.sendFile(`${__dirParentsName}/js/backend/backendPage.js`)
 });
 
+
+app.get("/helper/helper", (req, res) => {
+   res.sendFile(`${__dirParentsName}/js/helper/helper.js`)
+});
+
+app.get("/js/loadContent.js", (req, res) => {
+   res.sendFile(`${__dirParentsName}/js/backend/loadContent.js`)
+});
+
+app.get(/helper\/.*/i, (req, res) => {
+   res.sendFile(`${__dirParentsName}/js${req.path}`);
+   if (fs.existsSync(`${__dirParentsName}/js${req.path}`)) {
+   } else res.sendStatus(404);
+});
+
+app.get(/js\/loadContent\/.*/i, (req, res) => {
+   res.sendFile(`${__dirParentsName}/js${req.path}`);
+   if (fs.existsSync(`${__dirParentsName}/js${req.path}`)) {
+   } else res.sendStatus(404);
+});
+
 app.get("/css/style.css", (req, res) => {
    res.sendFile(`${__dirParentsName}/css/style.css`)
+});
+
+// app.get("/js/svg/AddSvg.js", (req, res) => {
+//    res.sendFile(`${__dirParentsName}/js/backend/loadContent.js`)
+// });
+app.get(/frontend\/components\/.*/i, (req, res) => {
+   if (fs.existsSync(__dirParentsName + "/js" + req.path)) {
+      res.sendFile(__dirParentsName + "/js" + req.path);
+   } else res.sendStatus(404);
+});
+
+app.get(/svg\/.*/i, (req, res) => {
+   if (fs.existsSync(__dirParentsName + "/js" + req.path)) {
+      res.sendFile(__dirParentsName + "/js" + req.path);
+   } else res.sendStatus(404);
 });
 
 app.get(/assets\/fonts\/.*/i, (req, res) => {
@@ -46,6 +82,7 @@ app.get(/assets\/fonts\/.*/i, (req, res) => {
       res.sendFile(__dirParentsName + req.path);
    } else res.sendStatus(404);
 });
+
 app.get(/assets\/svgs\/.*/i, (req, res) => {
    if (fs.existsSync(__dirParentsName + req.path)) {
       res.sendFile(__dirParentsName + req.path);

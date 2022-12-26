@@ -7,11 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import C_title from "../frontend/components/C_title";
-import { addHtmlElement, removeElement, componentWrapper } from "../helper/helper";
-import AddSVG from "../svg/AddSvg";
-import CloseSvg from "../svg/CloseSvg";
-import loadContent from "./loadContent";
+import C_title from "../frontend/components/C_title.js";
+import { addHtmlElement, removeElement, componentWrapper } from "../helper/helper.js";
+import AddSVG from "../svg/AddSvg.js";
+import CloseSvg from "../svg/CloseSvg.js";
+import loadContent from "./loadContent.js";
+console.log("app successfully loaded.js");
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("app successfully loaded");
@@ -21,6 +22,7 @@ import loadContent from "./loadContent";
         function addComponentMenu() {
             return __awaiter(this, void 0, void 0, function* () {
                 const componentMenu = addHtmlElement("div", "c_devMenu", "devMenu");
+                console.log(componentMenu);
                 const closeSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
                 closeSvg.svg.addEventListener("click", () => {
                     componentMenu.remove();

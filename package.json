@@ -1,7 +1,7 @@
 {
   "name": "personal_website",
   "version": "1.0.0",
-  "description": "Personal website with informations about the person, bBackend to swtich informations and a secured area for business partner.",
+  "description": "Personal website with informations about the person, backend to swtich informations and a secured area for business partner.",
   "scripts": {
     "watch": "webpack --watch",
     "serve": "webpack serve",
@@ -21,7 +21,7 @@
     "@types/mysql": "^2.15.19",
     "@types/node": "^16.3.2",
     "browser-sync": "^2.27.5",
-    "gulp": "^4.0.2",
+    "gulp": "^4.0.2", 
     "gulp-clean-css": "^4.3.0",
     "gulp-minify": "^3.1.0",
     "gulp-nodemon": "^2.5.0",

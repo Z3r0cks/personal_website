@@ -44,14 +44,16 @@ async function serverTsc(cb) {
 }
 
 async function tsc(cb) {
-   src('src/ts/**/*.ts')
+   src('src/js/**/*.ts')
       .pipe(ts({
-         module: 'commonjs',
+         module: 'esnext',
          target: 'es6',
-         lib: ['es6', 'dom'],
-         noImplicitAny: false,
          moduleResolution: 'node',
-         esModuleInterop: true
+         // declaration: true,
+         // lib: ['es6', 'dom'],
+         // noImplicitAny: false,
+         // esModuleInterop: true,
+         // allowNonTsExtensions: true
       }))
       .pipe(sourceMaps.write())
       // TODO: set noSource to true
@@ -61,14 +63,14 @@ async function tsc(cb) {
    cb();
 }
 
-function getEntries(pattern) {
-   const entries = {};
-   glob.sync(pattern).forEach((file) => {
-      const outputFileKey = path.basename(file.slice(0, -3));
-      entries[outputFileKey] = path.join(__dirname, file);
-   });
-   return entries;
-}
+// function getEntries(pattern) {
+//    const entries = {};
+//    glob.sync(pattern).forEach((file) => {
+//       const outputFileKey = path.basename(file.slice(0, -3));
+//       entries[outputFileKey] = path.join(__dirname, file);
+//    });
+//    return entries;
+// }
 
 async function bundleSass() {
    src('./src/scss/style.scss')
