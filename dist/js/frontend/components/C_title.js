@@ -1,12 +1,7 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const Component_1 = __importDefault(require("./Component"));
-const helper_1 = require("../../helper/helper");
-const lit_html_1 = require("lit-html");
-class C_title extends Component_1.default {
+import Component from './Component';
+import { addBackendInput, addBackendDropdownClick } from "../../helper/helper";
+import { html } from 'lit-html';
+export default class C_title extends Component {
     constructor() {
         super();
         this._devTitle = "c_title";
@@ -15,8 +10,8 @@ class C_title extends Component_1.default {
     }
     createBackendHtmlElements() {
         // add HTML backendElements. Use the Elements in helper.ts
-        const titleInput = helper_1.addBackendInput("text", false);
-        const type = helper_1.addBackendDropdownClick(["h1", "h2", "h3", "h4", "h5", "h6", "h7"], "Größe");
+        const titleInput = addBackendInput("text", false);
+        const type = addBackendDropdownClick(["h1", "h2", "h3", "h4", "h5", "h6", "h7"], "Größe");
         // add settings, whitch is necessary for the CMS
         this.setSetting({ content: titleInput, type: type });
         // link the input with a conten key whitch you can use with $$Key$$ in createDomElement
@@ -26,7 +21,7 @@ class C_title extends Component_1.default {
         this.createDOMELements();
     }
     createDOMELements() {
-        const domBuild = lit_html_1.html `
+        const domBuild = html `
          <div class="1">
             <div class="2">
                <div class="3"></div>
@@ -74,4 +69,3 @@ class C_title extends Component_1.default {
         }
     }
 }
-exports.default = C_title;

@@ -34,7 +34,7 @@ app.get("/js/main.js", (req, res) => {
 });
 
 app.get("/js/backendPage.js", (req, res) => {
-   res.sendFile(`${__dirParentsName}/js/backendPage.js`)
+   res.sendFile(`${__dirParentsName}/js/backend/backendPage.js`)
 });
 
 app.get("/css/style.css", (req, res) => {

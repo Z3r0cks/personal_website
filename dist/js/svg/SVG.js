@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class SVG {
     constructor(className, id, fill) {
         this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -12,4 +10,4 @@ class SVG {
         this.svg.appendChild(this.path);
     }
 }
-exports.default = SVG;
+export default SVG;

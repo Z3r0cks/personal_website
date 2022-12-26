@@ -1,10 +1,5 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const Component_1 = __importDefault(require("./Component"));
-class C_imageText extends Component_1.default {
+import Component from './Component';
+export default class C_imageText extends Component {
     constructor() {
         super();
         this._devTitle = "c_imageText";
@@ -14,4 +9,3 @@ class C_imageText extends Component_1.default {
     createBackendHtmlElements() {
     }
 }
-exports.default = C_imageText;

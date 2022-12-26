@@ -1,33 +1,28 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const SaveSvg_1 = __importDefault(require("../../svg/SaveSvg"));
-const CloseSvg_1 = __importDefault(require("../../svg/CloseSvg"));
-const SettingsSVG_1 = __importDefault(require("../../svg/SettingsSVG"));
-const helper_1 = require("../../helper/helper");
+import SaveSvg from '../../svg/SaveSvg';
+import CloseSvg from '../../svg/CloseSvg';
+import SettingsSvg from '../../svg/SettingsSVG';
+import { addErrorElement, addHtmlElement, componentWrapper, removeElement } from '../../helper/helper';
 ;
 ;
-class Component {
+export default class Component {
     constructor() {
         this._devTitle = "";
         this._pupTitle = "";
         this._descr = "";
         this._keyWords = {};
         this._elements = { tagName: "", attr: {}, childrens: [] };
-        this._coseSvg = new CloseSvg_1.default("be_closeSvg", "be_closeSvg", "#ff5454");
-        this._saveSVG = new SaveSvg_1.default("be_saveSvg", "be_saveSvg", "#ff5454");
+        this._coseSvg = new CloseSvg("be_closeSvg", "be_closeSvg", "#ff5454");
+        this._saveSVG = new SaveSvg("be_saveSvg", "be_saveSvg", "#ff5454");
         ;
-        this._settingsSVG = new SettingsSVG_1.default("be_settingsSvg", "be_settingsSvg", "#ff5454");
-        this._innerWrapper = helper_1.addHtmlElement("div", "be_innerCompWrapper");
+        this._settingsSVG = new SettingsSvg("be_settingsSvg", "be_settingsSvg", "#ff5454");
+        this._innerWrapper = addHtmlElement("div", "be_innerCompWrapper");
         this._allElements = [];
         this._settings = { color: "", content: "", type: "" };
         this.createOverlay();
     }
     createOverlay() {
         this._innerWrapper.append(this._settingsSVG.svg, this._saveSVG.svg, this._coseSvg.svg);
-        helper_1.componentWrapper.append(this._innerWrapper);
+        componentWrapper.append(this._innerWrapper);
         this.createBackendHtmlElements();
     }
     createBackendHtmlElements() { }
@@ -38,7 +33,7 @@ class Component {
         for (const [key, value] of Object.entries(ElObjects)) {
             this._innerWrapper.append(value);
         }
-        helper_1.componentWrapper.append(this._innerWrapper);
+        componentWrapper.append(this._innerWrapper);
         this._saveSVG.svg.addEventListener("click", () => {
             if (this.checkNecessaryInput(ElObjects)) {
                 for (const [key, value] of Object.entries(ElObjects)) {
@@ -54,9 +49,9 @@ class Component {
             }
             else {
                 if (document.getElementById("titleError")) {
-                    helper_1.removeElement("titleError");
+                    removeElement("titleError");
                 }
-                const errorP = helper_1.addErrorElement();
+                const errorP = addErrorElement();
                 this._innerWrapper.appendChild(errorP);
             }
         });
@@ -100,4 +95,3 @@ class Component {
         location.reload();
     }
 }
-exports.default = Component;

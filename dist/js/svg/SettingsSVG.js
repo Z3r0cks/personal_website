@@ -1,10 +1,5 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const SVG_1 = __importDefault(require("./SVG"));
-class SettingsSvg extends SVG_1.default {
+import SVG from './SVG';
+export default class SettingsSvg extends SVG {
     constructor(className, id, fill) {
         super(className, id, fill);
         const secondPath = document.createElementNS('http://www.w3.org/2000/svg', "path");
@@ -14,4 +9,3 @@ class SettingsSvg extends SVG_1.default {
         this.svg.append(this.path, secondPath);
     }
 }
-exports.default = SettingsSvg;
