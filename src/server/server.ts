@@ -1,6 +1,5 @@
 import express from "express";
 import fs from 'fs';
-import { stringify } from "querystring";
 import { Backend } from "./Backend";
 import { HomePage } from "./HomePage";
 import { SqlCommands } from "./interfaces/SqlCommands";
@@ -16,65 +15,33 @@ const __dirParentsName = __dirname.slice(0, 33);
 const app = express();
 app.use('/style.css', express.static('./dist/css'));
 app.use(express.json()) // <==== parse request body as JSON
-
 const server = app.listen(Port, () => {
    console.log(`server ist starting on port ${Port}`);
 });
 
-app.get("/", (req, res) => {
-   res.sendFile(`${__dirParentsName}/index.html`)
-});
+function addGetRequest(url: string, filePath: string) {
+   app.get(url, async (req, res) => {
+      res.sendFile(`${__dirParentsName}${filePath}`);
+   });
+}
 
-app.get("/backend", (req, res) => {
-   res.sendFile(`${__dirParentsName}/backend.html`)
-});
+const svgPath: string[] = ["SVG", "AddSvg", "CloseSvg", "SettingsSvg", "SaveSvg", "TrashSvg"];
+const jsPath: string[] = ["SVG", "AddSvg", "CloseSvg", "SettingsSvg", "SaveSvg", "TrashSvg"];
 
-// app.get("/js/main.js", (req, res) => {
-//    res.sendFile(`${__dirParentsName}/js/main.js`)
-// });
+addGetRequest("/", "/index.html")
+addGetRequest("/css/style.css", "/css/style.css")
+addGetRequest("/backend", "/backend.html")
+addGetRequest("/js/backendPage.js", "/js/backend/backendPage.js")
+addGetRequest("/js/loadContent", "/js/backend/loadContent.js")
+addGetRequest("/helper/helper", "/js/helper/helper.js")
+addGetRequest("/helper/helper.js", "/js/helper/helper.js")
+addGetRequest("/frontend/components/C_title", "/js/frontend/components/C_title.js")
+addGetRequest("/frontend/components/component", "/js/frontend/components/component.js")
+addGetRequest("/svg/SVG.js", "/js/svg/SVG.js")
 
-app.get("/js/backendPage.js", (req, res) => {
-   res.sendFile(`${__dirParentsName}/js/backend/backendPage.js`)
-});
 
-
-app.get("/helper/helper", (req, res) => {
-   res.sendFile(`${__dirParentsName}/js/helper/helper.js`)
-});
-
-app.get("/js/loadContent.js", (req, res) => {
-   res.sendFile(`${__dirParentsName}/js/backend/loadContent.js`)
-});
-
-app.get(/helper\/.*/i, (req, res) => {
-   res.sendFile(`${__dirParentsName}/js${req.path}`);
-   if (fs.existsSync(`${__dirParentsName}/js${req.path}`)) {
-   } else res.sendStatus(404);
-});
-
-app.get(/js\/loadContent\/.*/i, (req, res) => {
-   res.sendFile(`${__dirParentsName}/js${req.path}`);
-   if (fs.existsSync(`${__dirParentsName}/js${req.path}`)) {
-   } else res.sendStatus(404);
-});
-
-app.get("/css/style.css", (req, res) => {
-   res.sendFile(`${__dirParentsName}/css/style.css`)
-});
-
-// app.get("/js/svg/AddSvg.js", (req, res) => {
-//    res.sendFile(`${__dirParentsName}/js/backend/loadContent.js`)
-// });
-app.get(/frontend\/components\/.*/i, (req, res) => {
-   if (fs.existsSync(__dirParentsName + "/js" + req.path)) {
-      res.sendFile(__dirParentsName + "/js" + req.path);
-   } else res.sendStatus(404);
-});
-
-app.get(/svg\/.*/i, (req, res) => {
-   if (fs.existsSync(__dirParentsName + "/js" + req.path)) {
-      res.sendFile(__dirParentsName + "/js" + req.path);
-   } else res.sendStatus(404);
+svgPath.forEach(el => {
+   addGetRequest(`/svg/${el}`, `/js/svg/${el}.js`)
 });
 
 app.get(/assets\/fonts\/.*/i, (req, res) => {

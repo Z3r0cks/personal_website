@@ -1,4 +1,4 @@
-import SVG from './SVG';
+import SVG from './SVG.js';
 
 export default class SaveSvg extends SVG {
    constructor(className: string, id: string, fill: string) {

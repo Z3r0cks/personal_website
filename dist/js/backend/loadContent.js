@@ -13,6 +13,7 @@ export default function loadContent() {
     return __awaiter(this, void 0, void 0, function* () {
         let response = yield fetch('/selectContent');
         let data = yield response.json();
+        console.log("test");
         console.log(data);
         data.forEach(e => {
             const innerWrapper = addHtmlElement("div", "be_innerWrapper");

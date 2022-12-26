@@ -1,16 +1,12 @@
+import * as glob from "glob";
 import fs from 'fs';
 
 module.exports.migrateComponents = function () {
-   // import all classe from src/server/Migrations
-   const files = fs.readdirSync(`dist/server/Migrations`);
+
+   const files: string[] = glob.sync("./dist/server/Migrations/*.js");
+   console.log(files);
    for (const file of files) {
-      if (file.startsWith("create_c_")) {
-         const migration = require(`./Migrations/${file}`);
-         console.log(Object.values(migration)[0]);
-         // Obj.values(migration)
-         // const migration = new Migration();
-         // migration.migrate();
-      }
- 
+      const module = require(file);
+      console.log(module.default);
    }
-}
+} 

@@ -8,4 +8,5 @@ Scripts:
 gulp.cmd                                  starting gulp for server and scss
 npm run drop                              drop database
 npm run migrate                           migrate database
+npm run migrateComponents                 migrate components /WIP
 npm run createComponent --name=name       create new component

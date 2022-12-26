@@ -1,9 +1,9 @@
 import Setting from '../../interfaces/Setting';
 import SaveSvg from '../../svg/SaveSvg';
 import CloseSvg from '../../svg/CloseSvg';
-import SettingsSvg from '../../svg/SettingsSVG';
+import SettingsSvg from '../../svg/SettingsSvg';
 import { addErrorElement, addHtmlElement, componentWrapper, removeElement } from '../../helper/helper';
-import { html } from 'lit-html';
+// import { html } from 'lit-html';
 export interface ElementObj {
    tagName: string,
    attr: {},

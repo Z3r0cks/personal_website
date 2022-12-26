@@ -1,6 +1,5 @@
 import Component from './Component';
 import { addBackendInput, addBackendDropdownClick } from "../../helper/helper";
-import { html } from 'lit-html';
 export default class C_title extends Component {
     constructor() {
         super();
@@ -21,18 +20,7 @@ export default class C_title extends Component {
         this.createDOMELements();
     }
     createDOMELements() {
-        const domBuild = html `
-         <div class="1">
-            <div class="2">
-               <div class="3"></div>
-            </div>
-         </div>
-         <div class="a">
-            <div class="b">
-               <div class="c"></div>
-            </div>
-         </div>
-      `;
+        const domBuild = "<div>Test</div>";
         this.parseDOM(domBuild);
     }
     parseDOM(domBuild) {

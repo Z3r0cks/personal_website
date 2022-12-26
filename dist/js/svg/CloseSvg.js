@@ -1,4 +1,4 @@
-import SVG from './SVG';
+import SVG from './SVG.js';
 export default class CloseSvg extends SVG {
     constructor(className, id, fill) {
         super(className, id, fill);

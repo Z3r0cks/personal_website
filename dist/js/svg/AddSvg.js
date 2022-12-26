@@ -1,4 +1,4 @@
-import SVG from './SVG';
+import SVG from './SVG.js';
 class AddSVG extends SVG {
     constructor(className, id, fill) {
         super(className, id, fill);
